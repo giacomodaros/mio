@@ -1,3 +1,9 @@
+@font-face {
+  font-family: iA;
+  src: url(fonts/iAWriterMonoS-Regular.woff2);
+}
+
+
 body {
   margin-top: 5%;
   margin-left: 10%;
@@ -7,6 +13,11 @@ body {
 
 section h1 {
   text-align: left;
-  font-size: 4rem;
+  font-family: 'Rubik', 'Helvetica', sans-serif;
+}
+
+section h2 {
+  text-align: left;
+  font-size: 3rem;
   font-family: 'Rubik', 'Helvetica', sans-serif;
 }

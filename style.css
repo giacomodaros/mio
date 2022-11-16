@@ -3,6 +3,7 @@
   src: url(fonts/iAWriterMonoS-Regular.woff2);
 }
 
+.lineheight {line-height: 1.5em}
 
 body {
   margin-top: 5%;

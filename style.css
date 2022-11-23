@@ -5,10 +5,17 @@
 
 .lineheight {line-height: 1.5em}
 
+html {
+  padding-left: 7.5%;
+  padding-right: 7.5%;
+}
+
 body {
   margin-top: 5%;
-  margin-left: 25%;
-  margin-right: 25%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 800px;
   background-color: ##f7f7f7;
   font-size: 1.2rem;
   text-align: justify;
@@ -24,4 +31,15 @@ section h2 {
   text-align: left;
   font-size: 3rem;
   font-family: 'Rubik', 'Helvetica', sans-serif;
+}
+
+img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 700px;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
 }

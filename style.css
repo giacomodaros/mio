@@ -17,7 +17,7 @@ body {
   margin-right: auto;
   max-width: 800px;
   background-color: ##f7f7f7;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-align: justify;
   font-family: 'Rubik', 'Helvetica', sans-serif;
 }
@@ -42,4 +42,28 @@ img {
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+}
+
+/* unvisited link */
+a:link {
+  color: #3498d1;
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  color: #3498d1;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: grey;
+  text-decoration: none;
+}
+
+/* selected link */
+a:active {
+  color: grey;
+  text-decoration: none;
 }

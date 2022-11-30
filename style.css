@@ -1,6 +1,6 @@
 @font-face {
   font-family: iA;
-  src: url(fonts/iAWriterMonoS-Regular.woff2);
+  src: url("fonts/iAWriterDuoS-Italic.woff2");
 }
 
 .lineheight {line-height: 1.5em}
@@ -32,6 +32,7 @@ section h2 {
   font-size: 3rem;
   font-family: 'Rubik', 'Helvetica', sans-serif;
 }
+
 
 img {
   display: block;

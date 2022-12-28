@@ -25,6 +25,7 @@ body {
 section h1 {
   text-align: left;
   font-family: 'Rubik', 'Helvetica', sans-serif;
+  line-height: 300%;
 }
 
 section h2 {

@@ -63,3 +63,7 @@ with open("matter_history.csv", encoding="utf8") as csv_file:
     
     # Print a message indicating the file has been saved
     print("The HTML file has been saved to matter_history.html.")
+
+
+
+    # TIRARE VIA PRIME TRE. ANCHE QUELLE CHE WANNO OLTRE LIMITE CARATTERI (50?). MESI IN ITA

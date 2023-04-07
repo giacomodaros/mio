@@ -119,13 +119,28 @@ body.dark-mode a:active {
 .theme-toggle {
   position: absolute;
   top: 4%;
-  right: 4%;
+  right: 7.5%; /* Default value for mobile */
   border: none;
   background: none;
   padding: 0;
   cursor: pointer;
   z-index: 1000;
 }
+
+/* Media query for mobile devices */
+@media (max-width: 800px) {
+  .theme-toggle {
+    right: 7.5%; /* Aligns with the right margin of the body on mobile */
+  }
+}
+
+/* Media query for desktop devices */
+@media (min-width: 801px) {
+  .theme-toggle {
+    right: 4%; /* Aligns with the body right margin on desktop */
+  }
+}
+
 
 .theme-toggle img {
   width: 30px;

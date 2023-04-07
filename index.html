@@ -7,8 +7,42 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const themeToggle = document.getElementById("theme-toggle");
+      const lightIcon = document.getElementById("light-icon");
+      const darkIcon = document.getElementById("dark-icon");
+  
+      const userPrefersDark =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+  
+      if (userPrefersDark) {
+        toggleDarkMode(true);
+      }
+  
+      themeToggle.addEventListener("click", () => {
+        const isDarkModeEnabled = document.body.classList.toggle("dark-mode");
+        toggleDarkMode(isDarkModeEnabled);
+      });
+  
+      function toggleDarkMode(isDarkModeEnabled) {
+        if (isDarkModeEnabled) {
+          lightIcon.style.display = "none";
+          darkIcon.style.display = "inline";
+        } else {
+          lightIcon.style.display = "inline";
+          darkIcon.style.display = "none";
+        }
+      }
+    });
+  </script>  
   </head>
 <body>
+  <button id="theme-toggle" class="theme-toggle">
+    <img id="light-icon" src="images/moon-icon.png" alt="Toggle Dark Mode">
+    <img id="dark-icon" src="images/sun-icon.png" alt="Toggle Light Mode" style="display:none;">
+  </button>  
     <h1> ciao  </h1>
 <main class="lineheight">
   <p> un digital orto. what will your verse be? </p>

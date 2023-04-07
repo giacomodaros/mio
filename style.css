@@ -3,7 +3,24 @@
   src: url("fonts/iAWriterDuoS-Italic.woff2");
 }
 
-.lineheight {line-height: 1.5em}
+.lineheight {
+  line-height: 1.5em;
+}
+
+/* Define light and dark theme colors */
+:root {
+  --background-light: #f7f7f7;
+  --text-light: #000000;
+  --link-light: #3498d1;
+  --hover-light: grey;
+  --active-light: grey;
+
+  --background-dark: #1a1a1a;
+  --text-dark: #ffffff;
+  --link-dark: #3498d1;
+  --hover-dark: grey;
+  --active-dark: grey;
+}
 
 html {
   padding-left: 7.5%;
@@ -16,10 +33,26 @@ body {
   margin-left: auto;
   margin-right: auto;
   max-width: 800px;
-  background-color: #f7f7f7;
+  background-color: var(--background-light);
   font-size: 1.3rem;
   text-align: justify;
   font-family: 'Rubik', 'Helvetica', sans-serif;
+  color: var(--text-light);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Apply dark theme colors when user's system prefers a dark color scheme */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+  }
+}
+
+/* Apply dark theme colors when the 'dark-mode' class is added to the body */
+body.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
 }
 
 section h1 {
@@ -34,7 +67,6 @@ section h2 {
   font-family: 'Rubik', 'Helvetica', sans-serif;
 }
 
-
 img {
   display: block;
   width: auto;
@@ -48,24 +80,53 @@ img {
 
 /* unvisited link */
 a:link {
-  color: #3498d1;
+  color: var(--link-light);
   text-decoration: none;
 }
 
 /* visited link */
 a:visited {
-  color: #3498d1;
+  color: var(--link-light);
   text-decoration: none;
 }
 
 /* mouse over link */
 a:hover {
-  color: grey;
+  color: var(--hover-light);
   text-decoration: none;
 }
 
 /* selected link */
 a:active {
-  color: grey;
+  color: var(--active-light);
   text-decoration: none;
+}
+
+/* Apply dark theme colors for links */
+body.dark-mode a:link,
+body.dark-mode a:visited {
+  color: var(--link-dark);
+}
+
+body.dark-mode a:hover {
+  color: var(--hover-dark);
+}
+
+body.dark-mode a:active {
+  color: var(--active-dark);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 4%;
+  right: 4%;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.theme-toggle img {
+  width: 30px;
 }

@@ -35,7 +35,7 @@ body {
   max-width: 800px;
   background-color: var(--background-light);
   font-size: 1.3rem;
-  text-align: justify;
+  text-align: left;
   font-family: 'Rubik', 'Helvetica', sans-serif;
   color: var(--text-light);
   transition: background-color 0.3s, color 0.3s;
@@ -114,34 +114,4 @@ body.dark-mode a:hover {
 
 body.dark-mode a:active {
   color: var(--active-dark);
-}
-
-.theme-toggle {
-  position: absolute;
-  top: 4%;
-  right: 7.5%; /* Default value for mobile */
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  z-index: 1000;
-}
-
-/* Media query for mobile devices */
-@media (max-width: 800px) {
-  .theme-toggle {
-    right: 7.5%; /* Aligns with the right margin of the body on mobile */
-  }
-}
-
-/* Media query for desktop devices */
-@media (min-width: 801px) {
-  .theme-toggle {
-    right: 4%; /* Aligns with the body right margin on desktop */
-  }
-}
-
-
-.theme-toggle img {
-  width: 30px;
 }

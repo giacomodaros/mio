@@ -60,28 +60,25 @@ with open("python-articoli/matter_history.csv", encoding="utf8") as csv_file:
     html_output = ""
     
     # Iterate over each month and its articles
-    for month_year, articles in articles_by_month_list:
-        # Create an HTML header for the current month-year
-        html_header = f"<h2>{month_year}</h2>"
-        
-        # Create a list of HTML links for the articles in the current month-year
-        html_links = [f'<li><a href="{link}">{title}</a></li>' for title, link in articles]
-        
-        # Combine the HTML links into an unordered list
-        html_unordered_list = "<ul>\n" + "\n".join(html_links) + "\n</ul>"
-        
-        # Combine the HTML header and unordered list into a single string
-        html_month_output = html_header + html_unordered_list
-        
-        # Add the HTML output for the current month to the overall HTML output
-        html_output += html_month_output
+for month_year, articles in articles_by_month_list:
+    # Create an HTML header for the current month-year
+    html_header = f"<h2>{month_year}</h2>"
+    
+    # Create a list of HTML links for the articles in the current month-year with target="_blank" attribute
+    html_links = [f'<li><a href="{link}" target="_blank">{title}</a></li>' for title, link in articles]
+    
+    # Combine the HTML links into an unordered list
+    html_unordered_list = "<ul>\n" + "\n".join(html_links) + "\n</ul>"
+    
+    # Combine the HTML header and unordered list into a single string
+    html_month_output = html_header + html_unordered_list
+    
+    # Add the HTML output for the current month to the overall HTML output
+    html_output += html_month_output
     
     # Save the HTML output to a file
-    with open("matter_history.html", mode="w", encoding="utf8") as html_file:
+    with open("python-articoli/matter_history.html", mode="w", encoding="utf8") as html_file:
         html_file.write(html_output)
     
     # Print a message indicating the file has been saved
     print("The HTML file has been saved to matter_history.html.")
-
-
-    # TIRARE VIA PRIME TRE. ANCHE QUELLE CHE WANNO OLTRE LIMITE CARATTERI (50?). MESI IN ITA

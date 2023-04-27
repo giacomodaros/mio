@@ -2,14 +2,22 @@ import os
 from bs4 import BeautifulSoup
 import re
 
-input_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/gattopardo.html"
-output_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/gattopardo-clean.html"
+input_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/chiave_stella.html"
+output_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/chiave-stella.html"
 external_css_file_path = "../style.css"
 
 with open(input_file_path, "r", encoding="utf-8") as f:
     html_content = f.read()
 
 soup = BeautifulSoup(html_content, "html.parser")
+
+# Remove sectionHeading elements
+for section_heading in soup.find_all(class_="sectionHeading"):
+    section_heading.decompose()
+
+# Remove noteHeading elements
+for section_heading in soup.find_all(class_="noteHeading"):
+    section_heading.decompose()
 
 highlights = soup.find_all(class_="noteText")
 book_title = soup.find(class_="bookTitle").text.strip().lower()

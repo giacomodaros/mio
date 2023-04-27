@@ -2,7 +2,7 @@ import os
 from bs4 import BeautifulSoup
 import re
 
-input_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/chiave_stella.html"
+input_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/chiave-stella.html"
 output_file_path = "/Users/giacomo/Library/Mobile Documents/com~apple~CloudDocs/mio/kindle_exports/chiave-stella.html"
 external_css_file_path = "../style.css"
 
@@ -45,7 +45,7 @@ new_html.find("link", rel="stylesheet", type="text/css")["href"] = os.path.join(
 
 header = new_html.new_tag("h1", align="left")
 header.append(BeautifulSoup("""<a href="../index.html">orto</a> > <a href="../libri.html">libri</a> > """, "html.parser"))
-book_info = new_html.new_tag("a")
+book_info = new_html.new_tag("span")
 book_info.string = f"{book_title} - highlights"
 header.append(book_info)
 new_html.body.append(header)

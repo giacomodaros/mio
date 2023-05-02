@@ -17,7 +17,7 @@ def has_long_word(s, limit=30):
     return False
 
 # Open the CSV file and read its content
-with open("python-articoli/matter_history.csv", encoding="utf8") as csv_file:
+with open("python-articoli/_matter_history.csv", encoding="utf8") as csv_file:
     csv_reader = csv.reader(csv_file)
     # Skip the header row (if it exists)
     next(csv_reader, None)

@@ -37,7 +37,7 @@ with open("python-articoli/_matter_history.csv", encoding="utf8") as csv_file:
         interaction_date_str = row[8]
         
         # Check if the interaction date is not empty and if the title does not have long words
-        if interaction_date_str and not has_long_word(title):
+        if interaction_date_str and not has_long_word(title) and "🟡" not in title:
             # Parse the interaction date into a datetime object
             interaction_date = datetime.strptime(interaction_date_str, "%Y-%m-%d %H:%M:%S")
 
@@ -61,8 +61,12 @@ with open("python-articoli/_matter_history.csv", encoding="utf8") as csv_file:
     
     # Iterate over each month and its articles
 for month_year, articles in articles_by_month_list:
+
     # Create an HTML header for the current month-year
     html_header = f"<h2>{month_year}</h2>"
+
+    # Reverse the order of the articles
+    articles = list(reversed(articles))
     
     # Create a list of HTML links for the articles in the current month-year with target="_blank" attribute
     html_links = [f'<li><a href="{link}" target="_blank">{title}</a></li>' for title, link in articles]

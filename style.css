@@ -115,3 +115,40 @@ body.dark-mode a:hover {
 body.dark-mode a:active {
   color: var(--active-dark);
 }
+
+/* Define a container for the grid of images and enable CSS Grid */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* initially aim for at least 300px per image */
+  grid-gap: 10px; 
+  justify-items: center; /* Center grid items horizontally */
+  align-items: center; /* Center grid items vertically */
+}
+
+/* By default (on mobile), display the images in one column */
+.responsive-grid {
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+}
+
+/* On viewports that are at least 600px wide (tablets), display the images in 3 columns */
+@media (min-width: 600px) {
+  .responsive-grid {
+    grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
+  }
+}
+
+/* On viewports that are at least 900px wide (desktops), display the images in 4 columns */
+@media (min-width: 900px) {
+  .responsive-grid {
+    grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+  }
+}
+
+
+/* Style for the images */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+

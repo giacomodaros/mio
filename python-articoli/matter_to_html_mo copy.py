@@ -34,7 +34,7 @@ with open("python-articoli/_matter_history.csv", encoding="utf8") as csv_file:
         # Extract the data from the row
         title = row[0]
         link = row[3]
-        interaction_date_str = row[8]
+        interaction_date_str = row[10]
         
         # Check if the interaction date is not empty and if the title does not have long words
         if interaction_date_str and not has_long_word(title) and "🟡" not in title:

@@ -23,6 +23,27 @@
 <p>Non so gli altri che pensino di questo mio metodo di esprimermi o modo di essere, o che cosa voglia dire che sono fatto così (specialmente rispetto al mio non arrabbiarmi con le persone). Però non posso non pensare a come allora ci si dovrebbe comportare. Starei forse meglio se ogni giorno non ci fosse almeno una cosa che mi consuma di rabbia per almeno mezz'oretta. Però allora tutti i valori che mi fanno credere così profondamente in queste cose dove finirebbero? Potrei averli ancora? Se riuscissi a leggere che Salvini ha invitato l'ambasciatore cinese a posare la prima pietra del ponte sullo Stretto senza reazioni sarei una persona migliore? Se leggere le minchiate che qualche mitomane di ScPo scrive su LinkedIn non mi facesse nessun effetto vivrei meglio nel lungo termine? O semplicemente queste reazioni sono un desiderio che il mondo si tenga ad un livello minimo di decenza che giudicherei appropriato? Non lo so.</p>
 
 <p>Forse il segreto è fare finta che queste cose non esistano. Può essere che chi riesce ad isolarsene viva meglio. Non è questa l'atarassia? Forse sì. Ha senso raggiungerla? Si può vivere in una società in questo stato? Si ha voglia di contribuirci?</p>
+
+<div class="form-container">
+  <form name="feedback" action="/comment-success.html" method="POST" data-netlify="true">
+    <label for="name">nome:</label>
+    <input type="text" name="name" id="name" />
+    <label for="comment">commento:</label>
+    <textarea name="comment" id="comment"></textarea>
+    <button type="submit" class="text-button">Invia</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('comment');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  });
+</script>
+
 </main>
 </body>
 </html>

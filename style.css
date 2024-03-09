@@ -1,4 +1,4 @@
-.lineheight {
+.lineheight {#3498d1
   line-height: 1.5em;
 }
 
@@ -12,7 +12,7 @@
 
   --background-dark: #1a1a1a;
   --text-dark: #ffffff;
-  --link-dark: #3498d1;
+  --link-dark: ;
   --hover-dark: grey;
   --active-dark: grey;
 }
@@ -202,4 +202,39 @@ form input[type="email"] {
 input:focus,
 .text-button:focus {
   outline: 2px solid var(--link-light); /* Highlight focus */
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  form {
+    background-color: #404042; /* Dark grey background for the form */
+  }
+
+  form input[type="text"],
+  form input[type="email"] {
+    background-color: #131314; /* Black background for input fields */
+    color: var(--text-dark); /* Ensure text color is white or light for dark mode */
+    border-color: #555; /* Darker border for input fields for better visibility */
+  }
+
+  /* Adjusting the text button to have a lighter color for visibility */
+  .text-button {
+    color: #3498d1;
+  }
+}
+
+/* If you are using a class to toggle dark mode, add similar rules under a .dark-mode class */
+body.dark-mode form {
+  background-color: var(--background-dark);
+}
+
+body.dark-mode form input[type="text"],
+body.dark-mode form input[type="email"] {
+  background-color: #000;
+  color: var(--text-dark);
+  border-color: #555;
+}
+
+body.dark-mode .text-button {
+  color: var(--text-dark);
 }

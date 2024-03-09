@@ -158,3 +158,48 @@ body.dark-mode a:active {
   object-fit: cover;
 }
 
+form {
+  background-color: #f2f2f2; /* Light grey background */
+  padding: 20px;
+  border-radius: 15px; /* Rounded corners */
+  margin-bottom: 20px; /* Space below the form */
+  display: flex; /* Makes the form a flex container */
+  flex-direction: column; /* Stacks children vertically */
+  gap: 10px; /* Space between elements inside the form */
+}
+
+.input-group {
+  display: flex; /* Align items in a row */
+  width: 100%; /* Ensures the group takes full width of the form */
+}
+
+form input[type="text"],
+form input[type="email"] {
+  flex-grow: 1; /* Allows input to grow and fill available space */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 0.8rem; /* Ensuring Rubik font for consistency */
+}
+
+.text-button {
+  background-color: transparent; /* No background for the button */
+  border: none; /* No border */
+  color: var(--link-light); /* Inherits color from the root variable */
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem; /* Rubik font for consistency */
+  padding: 10px; /* Vertical padding to align with input height */
+  text-decoration: none; /* No underline to appear as plain text */
+}
+
+.text-button:hover {
+  text-decoration: underline; /* Adds underline on hover to indicate clickability */
+}
+
+/* Focus styles for better accessibility */
+input:focus,
+.text-button:focus {
+  outline: 2px solid var(--link-light); /* Highlight focus */
+}

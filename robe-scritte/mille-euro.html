@@ -52,6 +52,28 @@
          </li></ul>
     
     interessante farsi terapia da soli. vado a correre</p>
+
+    <div class="form-container">
+      <form name="feedback" action="/comment-success.html" method="POST" data-netlify="true">
+        <label for="name">se hai voglia di lasciare un commento puoi farlo qua sotto oppure a <a href="mailto:io@giacomo.cc">io@giacomo.cc</a>. grazie!<br><br>
+          nome:</label>
+        <input type="text" name="name" id="name" />
+        <label for="comment">commento:</label>
+        <textarea name="comment" id="comment"></textarea>
+        <button type="submit" class="text-button">invia</button>
+      </form>
+    </div>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var textarea = document.getElementById('comment');
+        textarea.addEventListener('input', function() {
+          this.style.height = 'auto';
+          this.style.height = (this.scrollHeight) + 'px';
+        });
+      });
+    </script>        
+
 </main>
 </body>
 </html>

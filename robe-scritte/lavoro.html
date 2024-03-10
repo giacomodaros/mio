@@ -53,6 +53,29 @@
 <h2>positivismo</h2>
 
 <p>Chiudiamo su delle note positive. Due mesi non sono tanti. È un'opportunità per capire, investendo relativamente poco tempo, come funziona un posto di lavoro normale gestito male - ossia una buona rappresentazione della maggioranza. Diciamo che può svegliare rispetto all'importanza dell'ambiente, del remoto e di una gestione se non illuminata almeno non da imbecilli. Non è neanche male escludere qualcosa che si è visto non piacerti, e fare attenzione a come avvengono nella pratica il newsmaking e lo spin. Da ultimo, è utile perché sono sicuramente più drammatico della media e vedo due mesi a 8 ore al giorno come un problema grosso. Mi farà probabilmente bene, tutto sommato.</p>
+
+<div class="form-container">
+  <form name="feedback" action="/comment-success.html" method="POST" data-netlify="true">
+    <label for="name">se hai voglia di lasciare un commento puoi farlo qua sotto oppure a <a href="mailto:io@giacomo.cc">io@giacomo.cc</a>. grazie!<br><br>
+      nome:</label>
+    <input type="text" name="name" id="name" />
+    <label for="comment">commento:</label>
+    <textarea name="comment" id="comment"></textarea>
+    <button type="submit" class="text-button">invia</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('comment');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  });
+</script>
+
+
 </main>
 </body>
 </html>

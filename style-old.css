@@ -1,4 +1,8 @@
-/* Root Variables - No change needed, but ensure all variables are correctly assigned */
+.lineheight {#3498d1
+  line-height: 1.5em;
+}
+
+/* Define light and dark theme colors */
 :root {
   --background-light: #f7f7f7;
   --text-light: #000000;
@@ -8,99 +12,150 @@
 
   --background-dark: #1a1a1a;
   --text-dark: #ffffff;
-  --link-dark: #3498d1; /* Assumed correct value */
+  --link-dark: ;
   --hover-dark: grey;
   --active-dark: grey;
 }
 
-/* Simplified structural styles */
 html {
-  padding: 0 7.5%;
+  padding-left: 7.5%;
+  padding-right: 7.5%;
   background-color: var(--background-light);
   transition: background-color 0.3s;
 }
 
 body {
-  margin: 10% auto;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 800px;
   font-size: 1.3rem;
+  text-align: left;
   font-family: 'Rubik', 'Helvetica', sans-serif;
   color: var(--text-light);
   transition: color 0.3s;
 }
 
-/* Responsive text alignment */
 @media (min-width: 600px) {
   body {
     text-align: justify;
   }
 }
 
-/* Dark Mode Styles */
-@media (prefers-color-scheme: dark), .dark-mode {
-  html, body {
+/* Apply dark theme colors when user's system prefers a dark color scheme */
+@media (prefers-color-scheme: dark) {
+  html {
     background-color: var(--background-dark);
+  }
+  body {
     color: var(--text-dark);
   }
 }
 
-/* Links */
-a:link, a:visited {
+/* Apply dark theme colors when the 'dark-mode' class is added to the body */
+html.dark-mode {
+  background-color: var(--background-dark);
+}
+body.dark-mode {
+  color: var(--text-dark);
+}
+
+section h1 {
+  text-align: left;
+  font-family: 'Rubik', 'Helvetica', sans-serif;
+  line-height: 300%;
+}
+
+section h2 {
+  text-align: left;
+  font-size: 3rem;
+  font-family: 'Rubik', 'Helvetica', sans-serif;
+}
+
+img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 700px;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+/* unvisited link */
+a:link {
   color: var(--link-light);
   text-decoration: none;
 }
 
+/* visited link */
+a:visited {
+  color: var(--link-light);
+  text-decoration: none;
+}
+
+/* mouse over link */
 a:hover {
   color: var(--hover-light);
-  text-decoration: none; /* Suggestion for visual feedback */
+  text-decoration: none;
 }
 
+/* selected link */
 a:active {
   color: var(--active-light);
+  text-decoration: none;
 }
 
-/* Dark Mode Link Styles */
-@media (prefers-color-scheme: dark), .dark-mode {
-  a:link, a:visited {
-    color: var(--link-dark);
-  }
-
-  a:hover {
-    color: var(--hover-dark);
-  }
-
-  a:active {
-    color: var(--active-dark);
-  }
+/* Apply dark theme colors for links */
+body.dark-mode a:link,
+body.dark-mode a:visited {
+  color: var(--link-dark);
 }
 
-/* Image Styles */
-img {
-  display: block;
-  max-height: 700px;
-  max-width: 90%;
-  margin: auto;
+body.dark-mode a:hover {
+  color: var(--hover-dark);
 }
 
-/* Responsive Grid */
+body.dark-mode a:active {
+  color: var(--active-dark);
+}
+
+/* Define a container for the grid of images and enable CSS Grid */
 .responsive-grid {
   display: grid;
-  grid-gap: 10px;
-  justify-items: center;
-  align-items: center;
-  grid-template-columns: 1fr; /* Default mobile setup */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* initially aim for at least 300px per image */
+  grid-gap: 10px; 
+  justify-items: center; /* Center grid items horizontally */
+  align-items: center; /* Center grid items vertically */
 }
 
+/* By default (on mobile), display the images in one column */
+.responsive-grid {
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+}
+
+/* On viewports that are at least 600px wide (tablets), display the images in 3 columns */
 @media (min-width: 600px) {
   .responsive-grid {
     grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
   }
 }
 
+/* On viewports that are at least 900px wide (desktops), display the images in 4 columns */
 @media (min-width: 900px) {
   .responsive-grid {
     grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
   }
+}
+
+
+/* Style for the images */
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 form {
@@ -239,3 +294,5 @@ form textarea {
   resize: vertical; /* Allows resizing only vertically */
   overflow-y: auto; /* Keeps the scrollbar appearance tidy */
 }
+
+

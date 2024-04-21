@@ -35,9 +35,10 @@ with open("python-articoli/_matter_history.csv", encoding="utf8") as csv_file:
         title = row[0]
         link = row[3]
         interaction_date_str = row[10]
+        read_status = row[8]  # This is the new line to check the read status
         
-        # Check if the interaction date is not empty and if the title does not have long words
-        if interaction_date_str and not has_long_word(title) and "🟡" not in title:
+        # Check if the interaction date is not empty, if the title does not have long words, if "🟡" is not in the title, and if the article has been marked as read
+        if interaction_date_str and not has_long_word(title) and "🟡" not in title and read_status == "True":
             # Parse the interaction date into a datetime object
             interaction_date = datetime.strptime(interaction_date_str, "%Y-%m-%d %H:%M:%S")
 
@@ -49,7 +50,7 @@ with open("python-articoli/_matter_history.csv", encoding="utf8") as csv_file:
                 articles_by_month[month_year_str].append((title, link))
             else:
                 articles_by_month[month_year_str] = [(title, link)]
-    
+
     # Create a list of tuples with the month-year string and the articles for that month
     articles_by_month_list = [(k, v) for k, v in articles_by_month.items()]
     
@@ -81,7 +82,7 @@ for month_year, articles in articles_by_month_list:
     html_output += html_month_output
     
     # Save the HTML output to a file
-    with open("python-articoli/matter_history_full.html", mode="w", encoding="utf8") as html_file:
+    with open("python-articoli/matter_history.html", mode="w", encoding="utf8") as html_file:
         html_file.write(html_output)
     
     # Print a message indicating the file has been saved

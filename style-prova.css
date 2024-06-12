@@ -1,0 +1,120 @@
+@font-face {
+    font-family: 'MS Sans Serif';
+    src: url('prova-fonts/ms-sans-serif.ttf') format('truetype');
+}
+
+body {
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    font-size: 16px; /* Define a base font size */
+    background-color: #eaeaea; /* Classic gray background */
+}
+
+.file-explorer-nav {
+    max-width: 800px;
+    border: 2px solid #000;
+    background-color: #ffffff; /* White background for the window */
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    font-size: inherit; /* Ensure the font size is inherited */
+    margin-top: 20px; /* Add margin-top to space between windows */
+}
+
+.window-title-bar {
+    background-color: #e2e2e2; /* Dark blue for Windows classic title bar */
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    border-bottom: 2px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 24px; /* Fixed height to ensure vertical alignment */
+    position: relative;
+}
+
+.window-title-bar .title {
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.window-title-bar .buttons {
+    display: flex;
+    gap: 5px;
+    padding-right: 1%;
+}
+
+.window-title-bar .buttons div {
+    width: 12px;
+    height: 12px;
+    background-color: #c0c0c0; /* Gray buttons */
+    border: 1px solid #808080; /* Darker gray border */
+}
+
+.navigation-sections {
+    display: flex;
+    padding: 10px;
+}
+
+.quick-access {
+    flex-basis: 30%;
+    max-width: 100px;
+    margin-right: 20px;
+    font-size: inherit; /* Ensure the font size is inherited */
+}
+
+.tree-view {
+    flex: 2;
+    padding-right: 20px;
+    font-size: inherit; /* Ensure the font size is inherited */
+}
+
+.quick-access h3 {
+    margin-top: 0;
+    font-size: inherit; /* Ensure the font size is inherited */
+}
+
+.quick-access ul, .tree-view ul {
+    list-style-type: none;
+    padding-left: 20px;
+    font-size: inherit; /* Ensure the font size is inherited */
+}
+
+.quick-access ul li, .tree-view ul li {
+    margin: 5px 0;
+    display: block;
+    align-items: center;
+    font-size: inherit; /* Ensure the font size is inherited */
+}
+
+.tree-view ul ul {
+    padding-left: 20px;
+    margin-left: 0;
+    font-size: inherit; /* Ensure the font size is inherited */
+}
+
+.tree-view img, .quick-access img {
+    vertical-align: middle;
+    margin-right: 5px;
+    max-width: 16px;  /* Maximum width */
+    max-height: 16px; /* Maximum height */
+    height: auto;     /* Maintain aspect ratio */
+    width: auto;      /* Maintain aspect ratio */
+}
+
+.additional-text {
+    margin-top: 20px;
+    font-size: inherit; /* Ensure the font size is inherited */
+    padding-left: 20px; /* Adjust padding to align with the tree view */
+}
+
+.full-width-text {
+    flex: 1;
+    font-size: inherit; /* Ensure the font size is inherited */
+    padding-left: 20px;
+    padding-right: 20px;
+}

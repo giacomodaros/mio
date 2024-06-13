@@ -6,12 +6,13 @@
 body {
     font-family: 'MS Sans Serif', Arial, sans-serif;
     font-size: 16px; /* Define a base font size */
-    background-color: #eaeaea; /* Classic gray background */
+    background-color: #85baa5; /* Classic gray background */
 }
 
 .file-explorer-nav {
     max-width: 800px;
     border: 2px solid #000;
+    border-radius: 3px;
     background-color: #ffffff; /* White background for the window */
     margin: auto;
     display: flex;

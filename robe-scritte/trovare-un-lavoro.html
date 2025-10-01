@@ -50,6 +50,29 @@
   <p>Confesso che lamentarsi non manca di soddisfarmi nel brevissimo termine. Nel breve termine però bisogna trovare qualcosa e non so come si fa. Bea chiama tre persone alla settimana: non so dove le trovi ma fa benissimo. Io continuo ad incattivirmi ogni giorno di più con tutto questo sistema ipocrita e so che andando avanti così mi ritroverò con <em>the short end of the stick</em>. Ho lo stampino di ScPo (che non si merita l'1% del suo valore) e lo butto perché non so come usarlo. Pensare di fare questa cosa una decina di volte nella vita è terrificante.</p>
   
   <p>Sono comunque contento che ci sia traccia pubblica della mia inesorabile discesa verso la pazzia. I precedenti instalments sono <a href="../robe-scritte.html">qui</a>.</p>
+
+
+<div class="form-container">
+  <form name="feedback" action="/comment-success.html" method="POST" data-netlify="true">
+    <label for="name">se hai voglia di lasciare un commento puoi farlo qua sotto oppure a <a href="mailto:io@giacomo.cc">io@giacomo.cc</a>. grazie!<br><br>
+      nome:</label>
+    <input type="text" name="name" id="name" />
+    <label for="comment">commento:</label>
+    <textarea name="comment" id="comment"></textarea>
+    <button type="submit" class="text-button">invia</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('comment');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  });
+</script>
+
 </main>
 </body>
 </html>

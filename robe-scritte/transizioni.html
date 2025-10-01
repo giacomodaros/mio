@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>lavoro - digital orto</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.png">
+  <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  </head>
+<body>
+  <h1 align="left"> <a href="../index.html">orto</a> > <a href="../robe-scritte.html">robe scritte</a> > transizioni</h1>
+<main class="lineheight">
+
+<p>la transizione verso l'adulthood è sempre la storia della realtà che è continua ma fatta di punti discreti, nel senso: ovviamente si cresce e si cambia un po' alla volta, ma ci sono dei punti in cui si sente di più (o magari soltanto ci si accorge di quanto è continuamente cambiato nell'ultimo periodo di x mesi, anni). nel senso: oggi ho iniziato a lavorare, ieri ero su un velib un settembre parigino, l'altro ieri seduto al pier a guardare kowloon di notte, il giorno prima a fare le foto di classe al da vinci. sicuramente da lì a qui ci sono stati tantissimi piccolissimi cambiamenti e conquiste, ma pochi momenti hanno quella irreversibilità che hanno la maturità, andare a vivere da solo o iniziare a lavorare. mi ricordo ancora benissimo il senso di libertà e spaesamento che ho avuto quando i miei mi hanno lasciato a dijon - da solo! </p>
+
+<p>forse, nell'arrivare, c'è sempre un po' di delusione: il tuo primo lavoro non sarà mai bello/ben pagato/meaningful come l'avevi immaginato; la tua prima casa non sarà mai tanto grande/luminosa/ben arredata. ma nel partire c'è sempre forse l'incertezza di lasciare una situazione che si aveva imparato a conoscere e tutto sommato gestire, forse apprezzare. </p>
+
+<p>diciamo che il focus nella previsione è molto diverso dal focus nel momento che è a sua volta diverso dal focus della nostalgia. e.g. il sogno/ricordo è spesso/sempre pulito, la vita sempre sporca: sforzi, carte, casini. ora ricordo il da vinci, hong kong, parigi con nostalgia ma spesso, mentre li vivevo, non li ho apprezzati abbastanza per i fastidi del day-to-day. sarà probabilmente così anche per oggi, mentre mi chiedo come farò ad aspettare che arrivi bea, a trovare una casa, a capire qualcosa di questo nuovo lavoro. però ho come paura che questo ultimo cambiamento sia un po' diverso, come dicono i REM: these things they go away, replaced by everyday. chissà se la vita da qui in poi sarà meno spontanea e colorata.</p>
+
+<p>se c'è una costante che sento è che tutto diventa meno su rotaie: l'università non era poi diversissima dal liceo. sì, dovevi trovare uno stage, una casa, ma non eri completamente nella wilderness - e le stakes molto basse. ora un pochino di più, e domani molto di più. l'hype sulla notte prima degli esami è forse proprio questo, fermarsi e take stock di un momento di discontinuità: domani non cambia niente, ma diventa tutto un po' meno su rotaie.</p>
+
+<div class="form-container">
+  <form name="feedback" action="/comment-success.html" method="POST" data-netlify="true">
+    <label for="name">se hai voglia di lasciare un commento puoi farlo qua sotto oppure a <a href="mailto:io@giacomo.cc">io@giacomo.cc</a>. grazie!<br><br>
+      nome:</label>
+    <input type="text" name="name" id="name" />
+    <label for="comment">commento:</label>
+    <textarea name="comment" id="comment"></textarea>
+    <button type="submit" class="text-button">invia</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var textarea = document.getElementById('comment');
+    textarea.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = (this.scrollHeight) + 'px';
+    });
+  });
+</script>
+
+
+</main>
+</body>
+</html>

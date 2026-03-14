@@ -2,8 +2,8 @@ import os
 from bs4 import BeautifulSoup
 import re
 
-input_file_path = "/Users/giacomo/Desktop/I_piccoli_maestri___Notebook.html"
-output_file_path = "/Users/giacomo/Desktop/piccoli-maestri.html"
+input_file_path = "/Users/giacomo/Desktop/Kaputt.html"
+output_file_path = "/Users/giacomo/Desktop/kaputt.html"
 external_css_file_path = "../style.css"
 
 with open(input_file_path, "r", encoding="utf-8") as f:

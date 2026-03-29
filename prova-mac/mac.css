@@ -1,0 +1,466 @@
+@font-face {
+  font-family: "Chicago";
+  src: url("../prova-fonts/ChicagoFLF.ttf") format("truetype");
+}
+
+body {
+  margin: 0;
+  padding: 10px 12px 20px;
+  font-family: "Chicago", "Geneva", sans-serif;
+  font-size: 16px;
+  line-height: 1.35;
+  color: #000;
+  background: #d7e1c8;
+}
+
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+a:hover {
+  background: #000;
+  color: #fff;
+}
+
+.file-explorer-nav,
+.mac-document {
+  max-width: 860px;
+  margin: 12px auto 0;
+  border: 2px solid #000;
+  background: #f7f7f2;
+  box-shadow: 14px 14px 0 rgba(92, 104, 83, 0.45);
+}
+
+.window-title-bar {
+  display: grid;
+  grid-template-columns: 72px 1fr 72px;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 10px;
+  border-bottom: 2px solid #000;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #f6f6f1 0,
+      #f6f6f1 2px,
+      #d0d0c8 2px,
+      #d0d0c8 3px
+    );
+}
+
+.window-title-bar::before {
+  content: "";
+  display: block;
+  width: 52px;
+  height: 18px;
+  border: 2px solid #000;
+  background:
+    linear-gradient(45deg, transparent 40%, #000 40%, #000 50%, transparent 50%),
+    #f7f7f2;
+  box-sizing: border-box;
+}
+
+.window-title-bar::after {
+  content: "";
+  justify-self: end;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000;
+  background:
+    radial-gradient(circle at 50% 50%, #7ea06b 0, #7ea06b 3px, transparent 3px),
+    #f7f7f2;
+  box-sizing: border-box;
+}
+
+.title {
+  position: relative;
+  justify-self: center;
+  display: inline-block;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 15px;
+  background: #f7f7f2;
+  z-index: 1;
+}
+
+.title::before,
+.title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 290px;
+  height: 8px;
+  transform: translateY(-50%);
+}
+
+.title::before {
+  right: 100%;
+  margin-right: 12px;
+  background: repeating-linear-gradient(180deg, #000 0, #000 1px, transparent 1px, transparent 2px);
+}
+
+.title::after {
+  left: 100%;
+  margin-left: 12px;
+  background: repeating-linear-gradient(180deg, #000 0, #000 1px, transparent 1px, transparent 2px);
+}
+
+.navigation-sections,
+.document-body {
+  display: flex;
+  padding: 12px;
+  gap: 16px;
+}
+
+.quick-access {
+  flex: 0 0 190px;
+  padding: 10px;
+  border: 2px solid #000;
+  background: #f7f7f2;
+}
+
+.tree-view,
+.full-width-text,
+.document-content {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid #000;
+  background: #fdfdf8;
+}
+
+.quick-access ul,
+.tree-view ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quick-access li,
+.tree-view li {
+  margin: 0 0 10px;
+}
+
+.nav-section-title,
+.tree-section-title {
+  margin: 0 0 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #47633a;
+}
+
+.nav-entry,
+.tree-entry,
+.meta-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 26px;
+}
+
+.nav-entry {
+  padding: 2px 4px;
+}
+
+.nav-entry.active {
+  background: #dce8cf;
+  outline: 2px solid #000;
+}
+
+.tree-entry.root {
+  font-weight: bold;
+}
+
+.tree-entry.branch {
+  padding-left: 10px;
+}
+
+.tree-entry.branch::before {
+  content: "L";
+  display: inline-block;
+  width: 10px;
+  margin-right: 2px;
+}
+
+.tree-note {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 2px solid #000;
+}
+
+.tree-note p {
+  margin: 0;
+}
+
+.icon {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+
+.icon-plant::before,
+.icon-plant::after,
+.icon-book::before,
+.icon-book::after,
+.icon-articles::before,
+.icon-articles::after,
+.icon-images::before,
+.icon-images::after,
+.icon-writing::before,
+.icon-writing::after,
+.icon-folder::before,
+.icon-folder::after,
+.icon-doc::before,
+.icon-doc::after {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.icon-plant::before {
+  left: 9px;
+  top: 5px;
+  width: 2px;
+  height: 13px;
+  background: #6c913b;
+  box-shadow: -2px 7px 0 0 #6c913b;
+}
+
+.icon-plant::after {
+  left: 1px;
+  top: 1px;
+  width: 17px;
+  height: 11px;
+  background:
+    radial-gradient(circle at 5px 8px, #88b63f 0, #88b63f 4px, transparent 4px),
+    radial-gradient(circle at 14px 3px, #88b63f 0, #88b63f 4px, transparent 4px),
+    radial-gradient(circle at 10px 10px, #6e9938 0, #6e9938 2px, transparent 2px);
+}
+
+.icon-book::before {
+  inset: 1px 1px 1px 3px;
+  border: 2px solid #000;
+  background:
+    linear-gradient(90deg, #a86834 0 4px, #f4edd8 4px),
+    repeating-linear-gradient(180deg, transparent 0, transparent 3px, #cabf9f 3px, #cabf9f 4px);
+  box-shadow: inset -2px 0 0 #d7ceb2;
+}
+
+.icon-book::after {
+  left: 7px;
+  top: 4px;
+  width: 8px;
+  height: 10px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.icon-articles::before {
+  left: 4px;
+  top: 2px;
+  width: 12px;
+  height: 14px;
+  border: 2px solid #000;
+  background: #fff;
+  box-shadow: -3px 3px 0 0 #f7f7f2, -3px 3px 0 2px #000;
+}
+
+.icon-articles::after {
+  left: 7px;
+  top: 6px;
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.icon-images::before {
+  inset: 2px;
+  border: 2px solid #000;
+  background:
+    linear-gradient(145deg, transparent 50%, #000 50%, #000 56%, #7ea06b 56%, #7ea06b 60%, transparent 60%),
+    linear-gradient(35deg, transparent 60%, #000 60%, #000 66%, #d2c491 66%, #d2c491 70%, transparent 70%),
+    linear-gradient(180deg, #e8efe1 0 6px, #fff 6px);
+}
+
+.icon-images::after {
+  left: 5px;
+  top: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #7ea06b;
+  box-shadow: 0 0 0 2px #000 inset;
+}
+
+.icon-writing::before {
+  left: 1px;
+  top: 11px;
+  width: 17px;
+  height: 5px;
+  border: 2px solid #000;
+  background: linear-gradient(90deg, #f2d28e 0 9px, #fff 9px);
+  transform: rotate(-20deg);
+}
+
+.icon-writing::after {
+  left: 13px;
+  top: 3px;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 8px solid #d4a05e;
+  transform: rotate(28deg);
+}
+
+.icon-folder::before {
+  left: 1px;
+  top: 6px;
+  width: 18px;
+  height: 12px;
+  border: 2px solid #000;
+  border-radius: 2px;
+  background:
+    linear-gradient(180deg, #fff4cf 0 2px, #f7f2de 2px);
+}
+
+.icon-folder::after {
+  left: 3px;
+  top: 3px;
+  width: 9px;
+  height: 5px;
+  border: 2px solid #000;
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+  background: #fff4cf;
+}
+
+.icon-doc::before {
+  left: 4px;
+  top: 1px;
+  width: 12px;
+  height: 17px;
+  border: 2px solid #000;
+  background:
+    linear-gradient(135deg, transparent 0 6px, #d9d9d9 6px 7px, transparent 7px),
+    #fff;
+}
+
+.icon-doc::after {
+  left: 8px;
+  top: 6px;
+  width: 4px;
+  height: 7px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  box-shadow: 0 4px 0 0 #000 inset;
+}
+
+.icon-badge {
+  color: #2d6b2d;
+}
+
+.full-width-text ol,
+.document-content main {
+  margin: 0;
+}
+
+.full-width-text p,
+.document-content p {
+  margin: 8px 0;
+}
+
+.full-width-text p:not([style]),
+.document-content main p:not([style]) {
+  max-width: 44em;
+  padding: 8px 12px 8px 14px;
+  border-left: 2px solid #000;
+  background: #ecece6;
+  font-family: "Chicago", "Geneva", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.full-width-text li {
+  margin-bottom: 8px;
+}
+
+.document-meta {
+  flex: 0 0 190px;
+  padding: 10px;
+  border: 2px solid #000;
+  background: #f7f7f2;
+}
+
+.document-meta p {
+  margin: 0 0 10px;
+}
+
+.document-content h1 {
+  margin: 0 0 14px;
+  font-size: 24px;
+}
+
+.document-content main {
+  line-height: 1.5;
+}
+
+.document-content main p[style] {
+  padding: 4px 0;
+  text-align: center !important;
+}
+
+.mac-highlight-document .window-title-bar {
+  min-height: 34px;
+  padding: 4px 10px;
+}
+
+.mac-highlight-document .window-title-bar::before {
+  width: 46px;
+  height: 16px;
+}
+
+.mac-highlight-document .window-title-bar::after {
+  width: 16px;
+  height: 16px;
+}
+
+.mac-highlight-document .title {
+  font-size: 13px;
+  padding: 0 12px;
+}
+
+.mac-highlight-document .title::before,
+.mac-highlight-document .title::after {
+  width: 220px;
+  height: 7px;
+}
+
+@media (max-width: 760px) {
+  .navigation-sections,
+  .document-body {
+    flex-direction: column;
+  }
+
+  .quick-access,
+  .document-meta {
+    flex-basis: auto;
+  }
+
+  .window-title-bar {
+    grid-template-columns: 52px 1fr;
+  }
+
+  .window-title-bar::after {
+    display: none;
+  }
+
+  .title::before,
+  .title::after {
+    width: 110px;
+  }
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <title>temi nel tempo — digital orto</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="images/favicon.png">
+  <style>
+    :root{color-scheme:light;--paper:#f5f4ef;--ink:#242621;--muted:#77796f;--line:#deddd5;--panel:#eeede6;--accent:#ba4f37;--blue:#397f84;--gold:#bb8b37;--plum:#7e648a;--green:#627a50;--rose:#b8666c;--slate:#62748c;--teal:#448475;--orange:#c37b48}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input,select{font:inherit}button{color:inherit}.wrap{width:min(1240px,calc(100% - 48px));margin:36px auto 80px}
+    .topline{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-bottom:48px}.topline a{color:inherit;text-decoration:none}.topline a:hover{color:var(--accent)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-size:11px;font-weight:700;margin:0 0 14px}
+    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(44px,7.2vw,88px);font-weight:400;letter-spacing:-.06em;line-height:.95;max-width:850px;margin:0}
+    .intro{display:flex;align-items:end;justify-content:space-between;gap:40px;border-bottom:1px solid var(--line);padding:0 0 31px}
+    .intro-copy{max-width:740px}.intro p:not(.eyebrow){font-size:16px;line-height:1.55;color:#686a62;margin:22px 0 0;max-width:660px}
+    .totals{display:flex;gap:23px;flex-shrink:0}.total{min-width:78px}.total b{font-family:Georgia,serif;font-size:28px;font-weight:400;letter-spacing:-.03em}.total span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:38px 0 15px}.section-head h2{font:400 25px Georgia,serif;letter-spacing:-.025em;margin:0}.section-head p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+    .mode{display:inline-flex;gap:3px;padding:3px;background:var(--panel);border-radius:8px}.mode button{border:0;background:none;padding:7px 10px;border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer}.mode button.active{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px #0001}
+    .heat-wrap{overflow-x:auto;padding-bottom:4px}.heatmap{min-width:720px;width:100%;border-collapse:separate;border-spacing:5px 4px;table-layout:fixed}.heatmap th{font-size:11px;color:var(--muted);font-weight:500;text-align:center;padding:0 0 7px}.heatmap th:first-child{width:205px;text-align:left}.heatmap .volume-row th{font-size:10px;color:var(--muted);vertical-align:bottom;padding-bottom:7px}.volume-row th:first-child{font-size:10px;text-transform:uppercase;letter-spacing:.08em}.vol{height:35px;display:flex;align-items:end;justify-content:center;position:relative}.vol i{display:block;width:16px;background:#aaa99f;border-radius:3px 3px 0 0;min-height:2px}.vol span{position:absolute;top:-14px;font-size:10px;color:var(--muted);font-weight:400}
+    .theme-row{cursor:pointer}.theme-row td{padding:3px 0}.theme-button{border:0;background:transparent;display:flex;align-items:center;gap:9px;text-align:left;width:100%;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:13px}.theme-button:hover,.theme-row.selected .theme-button{background:var(--panel)}.swatch{width:9px;height:9px;border-radius:50%;flex:0 0 auto}.theme-label{flex:1}.theme-total{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px}.cell{height:36px;border-radius:5px;text-align:center;vertical-align:middle;font-size:10px;color:#373832;font-variant-numeric:tabular-nums;transition:filter .12s ease}.theme-row:hover .cell,.theme-row.selected .cell{filter:saturate(1.15)}.year-total-row td{border-top:1px solid var(--line);padding:10px 0 0;text-align:center;color:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}.year-total-row td:first-child{text-align:left;text-transform:uppercase;letter-spacing:.08em;font-size:10px}
+    .scale{display:flex;justify-content:flex-end;align-items:center;gap:6px;color:var(--muted);font-size:10px;margin:8px 6px 0}.scale i{width:14px;height:10px;border-radius:2px;background:var(--accent)}
+    .yearly{margin-top:38px}.annual-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.annual-card{background:var(--panel);border-radius:8px;padding:15px 15px 14px;min-height:230px}.annual-title{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:11px}.annual-title strong{font:400 21px Georgia,serif}.annual-title span{font-size:10px;color:var(--muted)}.annual-label{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:12px 0 6px}.annual-top{list-style:none;padding:0;margin:0}.annual-top li{display:grid;grid-template-columns:16px 1fr auto;align-items:baseline;gap:5px;padding:4px 0;font-size:11px}.annual-top .rank{font-size:9px;color:var(--muted)}.annual-top .value{font-size:10px;font-variant-numeric:tabular-nums;color:var(--muted)}.annual-sub{font-size:10px;color:var(--muted);line-height:1.35;margin:5px 0 0}.change-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}.change-title{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 5px}.change-item{font-size:10px;line-height:1.35;margin:3px 0}.change-item b{font-weight:600;font-variant-numeric:tabular-nums}.change-up{color:#3e795f}.change-down{color:#b15347}.baseline{font-size:10px;color:var(--muted);line-height:1.45;margin-top:8px}
+    .detail{margin-top:35px;background:#ecebe4;border-radius:12px;padding:25px 28px 23px}.detail-top{display:flex;justify-content:space-between;align-items:start;gap:18px}.detail h2{font:400 27px Georgia,serif;letter-spacing:-.03em;margin:0}.detail .description{font-size:12px;color:var(--muted);line-height:1.45;margin:6px 0 0}.series-legend{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end;max-width:57%}.series-legend button{border:1px solid #d5d4cc;background:transparent;border-radius:99px;padding:6px 10px;font-size:11px;cursor:pointer}.series-legend button:hover,.series-legend button.active{background:var(--paper);border-color:#aaa99f}.series-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px}.chart-box{height:280px;margin-top:20px;position:relative}.chart-box svg{width:100%;height:100%;overflow:visible}.axis-line{stroke:#d3d2c9;stroke-width:1}.axis-label{fill:#77796f;font:11px Inter,Arial,sans-serif}.series-line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.series-point{stroke:var(--paper);stroke-width:2}.chart-tooltip{position:absolute;display:none;z-index:1;background:var(--ink);color:#fff;padding:7px 9px;border-radius:5px;font-size:11px;pointer-events:none;transform:translate(-50%,-110%);white-space:nowrap}
+    .reading-section{margin-top:42px;border-top:1px solid var(--line);padding-top:24px}.reading-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px}.reading-head h2{font:400 25px Georgia,serif;margin:0}.reading-head span{font-size:12px;color:var(--muted)}.filters{display:flex;gap:8px;margin:15px 0 12px}.filters select,.filters input{border:1px solid var(--line);background:transparent;border-radius:5px;padding:8px 10px;color:var(--ink);font-size:12px}.filters input{flex:1;min-width:140px}.items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px}.item{display:grid;grid-template-columns:35px 1fr;gap:7px;border-top:1px solid var(--line);padding:11px 0}.item-year{font-size:10px;color:var(--muted);padding-top:3px}.item-title{font-size:12px;line-height:1.4}.item-kind{font-size:10px;color:var(--muted);margin-top:4px}.empty{font-size:13px;color:var(--muted);padding:16px 0}.footnote{max-width:900px;font-size:11px;line-height:1.55;color:var(--muted);margin:19px 0 0}.footnote a{color:inherit}
+    @media(max-width:1000px){.annual-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:800px){.wrap{width:min(100% - 30px,680px);margin-top:22px}.topline{margin-bottom:37px}.intro{display:block}.totals{margin-top:23px}.section-head{align-items:start;flex-direction:column}.detail{padding:20px 15px}.detail-top{display:block}.series-legend{justify-content:flex-start;max-width:none;margin-top:14px}.chart-box{height:245px}.items{grid-template-columns:repeat(2,minmax(0,1fr))}.heatmap{min-width:720px}}
+    @media(prefers-color-scheme:dark){:root{color-scheme:dark;--paper:#20221f;--ink:#ecebe5;--muted:#a6a79e;--line:#41433d;--panel:#30322e;--accent:#e28d74}.intro p:not(.eyebrow){color:#b0b1a8}.detail{background:#2b2d29}.cell{color:#242621}.vol i{background:#77796f}.theme-button:hover,.theme-row.selected .theme-button,.series-legend button:hover,.series-legend button.active{background:#383a35}.series-legend button{border-color:#4a4c46}.series-point{stroke:var(--paper)}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <nav class="topline"><a href="index.html">← orto</a><span>Archivio di lettura · 2019—2026</span></nav>
+  <header class="intro">
+    <div class="intro-copy">
+      <p class="eyebrow">Archivio · 2019—2026</p>
+      <h1>Temi di lettura</h1>
+      <p>Come cambiano nel tempo libri e articoli salvati. La mappa riassume i temi ricorrenti; selezionane uno per seguirne i sottotemi e i titoli associati.</p>
+    </div>
+    <div class="totals" id="totals"></div>
+  </header>
+
+  <section aria-labelledby="overview-title">
+    <div class="section-head">
+      <div><h2 id="overview-title">I temi, anno per anno</h2><p>Ogni riga è un tema; le colonne sono gli anni. Clicca una riga per aprire i sottotemi.</p></div>
+      <div class="mode" role="group" aria-label="Unità di misura"><button data-mode="share" class="active">Quota %</button><button data-mode="count">Titoli</button></div>
+    </div>
+    <div class="heat-wrap"><table class="heatmap" id="heatmap" aria-label="Evoluzione dei temi per anno"></table></div>
+    <div class="scale" id="scale"></div>
+  </section>
+
+  <section class="yearly" aria-labelledby="yearly-title">
+    <div class="section-head"><div><h2 id="yearly-title">Un anno alla volta</h2><p id="yearly-caption">Temi più presenti e scarti rispetto all’anno precedente.</p></div></div>
+    <div class="annual-grid" id="annual-grid"></div>
+  </section>
+
+  <section class="detail" aria-labelledby="detail-title">
+    <div class="detail-top">
+      <div><h2 id="detail-title"></h2><p class="description" id="detail-description">Andamento annuale dei sottotemi selezionati</p></div>
+      <div class="series-legend" id="series-legend"></div>
+    </div>
+    <div class="chart-box"><div class="chart-tooltip" id="tooltip"></div><svg id="subchart" viewBox="0 0 900 280" role="img" aria-label="Andamento dei sottotemi nel tempo"></svg></div>
+  </section>
+
+  <section class="reading-section" aria-labelledby="list-title">
+    <div class="reading-head"><h2 id="list-title">Le letture in questo tema</h2><span id="item-count"></span></div>
+    <div class="filters">
+      <select id="year-filter" aria-label="Filtra per anno"><option value="all">Tutti gli anni</option></select>
+      <select id="kind-filter" aria-label="Filtra per tipo"><option value="all">Libri e articoli</option><option value="book">Libri</option><option value="article">Articoli</option></select>
+      <input id="search" type="search" placeholder="Cerca un titolo" aria-label="Cerca un titolo">
+    </div>
+    <div class="items" id="items"></div>
+    <p class="footnote">I temi sono stati assegnati automaticamente usando parole chiave nei titoli, quindi sono indicativi: un libro può trattare più argomenti di quelli suggeriti dal titolo. I conteggi riflettono gli elementi registrati negli elenchi; una lettura registrata in due anni compare due volte. Fonte: <a href="libri.html">libri</a> e <a href="non-libri.html">non libri</a>.</p>
+  </section>
+</main>
+<script src="reading-data.js"></script>
+<script>
+const palette=['#397f84','#ba4f37','#bb8b37','#7e648a','#627a50','#b8666c','#62748c','#448475','#c37b48','#8e7758','#647f9b','#a45d4e','#718052','#886e9e','#96723d'];
+const taxonomy=[
+ {name:'Storia e geopolitica',subs:[
+  {name:'Cina e Asia orientale',keys:['china','chinese','japan','japanese','hong kong','taiwan','asia','korea','deng xiaoping','indochina','beijing','tokyo']},
+  {name:'Guerre e fascismi',keys:['war','battle','wwii','world war','second world war','fascis','nazi','hitler','resistance','d-day','vichy','holocaust','military','bomb','spies','espionage','cold war','vietna','franco']},
+  {name:'Italia ed Europa',keys:['italy','italian','italia','veneto','venice','rome','roman','france','french','paris','britain','british','europe','european','germany','german','spain','spanish','portugal','cavour','garibaldi']},
+  {name:'Stati Uniti e potere',keys:['america','american','united states','president','trump','kennedy','jfk','government','politic','election','democracy','state','power','congress','white house','cia','intelligence','republic','dictator']},
+  {name:'Imperi e storia antica',keys:['ancient','empire','civilization','civilisation','roman empire','rome','roman','antiquity','middle ages','medieval','ottoman','silk road','colonial','colony','century','centuries','history of']}
+ ]},
+ {name:'Tecnologia e scienza',subs:[
+  {name:'AI, internet e software',keys:['artificial intelligence','ai ',' ai','algorithm','internet','web ','software','programming','coding','computer science','machine learning','chatgpt','robot','data','cyber','digital']},
+  {name:'Computer e prodotti',keys:['computer','macintosh','mac ','apple','iphone','ipod','pixel','chip','microprocessor','personal computer','technology','tech ','gadget','device','console','game boy','video game','product design','electronics','intel','nvidia','samsung']},
+  {name:'Energia, spazio e ingegneria',keys:['energy','electric','battery','nuclear','atomic','space','moon','mars','rocket','aviation','aircraft','jet','engineering','physics','science','voyager','concorde','train','railway','transport','infrastructure','climate','environment']}
+ ]},
+ {name:'Lavoro e denaro',subs:[
+  {name:'Lavoro e carriere',keys:['work','job','career','workplace','working','labor','labour','worker','workers','employment','profession','office','boss','corporate job','productivity','bullshit jobs','retirement']},
+  {name:'Aziende, mercati e denaro',keys:['business','company','companies','market','money','econom','capital','finance','bank','wealth','rich','poor','salary','invest','trade','startup','entrepreneur','ceo','management','stock','corporate','industry','growth','inequality','debt','capitalism','capitalist']}
+ ]},
+ {name:'Cultura e immaginario',subs:[
+  {name:'Letteratura e lettura',keys:['book','reading','novel','fiction','literature','poetry','poem','writer','writing','story','stories','tale','tales','shakespeare','macbeth','hamlet','odyssey','gatsby','borges','calvino','dante','ariosto','author','essay','language','words','libro','lettura','sillabario']},
+  {name:'Cinema, musica e media',keys:['film','movie','cinema','hollywood','music','song','dylan','radio','television',' tv','tv ','media','journalism','newspaper','magazine','podcast','streaming','netflix','pixar','disney','broadcast','advertis','brand','coca-cola','culture','pop culture']},
+  {name:'Design, cibo e stile',keys:['design','aesthetic','fashion','style','clothes','color','colour','food','cooking','restaurant','sushi','wine','coffee','beer','coca-cola','architecture','logo','graphic','taste','fashion','craft','crafts','art ','artist','painting','museum']}
+ ]},
+ {name:'Luoghi e società',subs:[
+  {name:'Città, viaggi e geografia',keys:['city','cities','urban','place','travel','journey','geography','map','paris','hong kong','venice','tokyo','london','chicago','metropolis','touris','tourist','walking','road','road trip','world tour','migration','immigrant']},
+  {name:'Società e disuguaglianze',keys:['society','social','people','population','class','inequality','generation','young people','childhood','children','education','school','university','culture war','community','demographic','gender','race','racism','class divide','merit','status','shame','tradition','modern life']}
+ ]},
+ {name:'Mente e vita',subs:[
+  {name:'Mente, salute e abitudini',keys:['mind','brain','psycholog','health','sleep','happiness','happy','attention','memory','habit','wellbeing','well-being','exercise','running','fitness','body','diet','eating','sobriety','alcohol','meaning','life strategy','personal development','self-help','emotion','feeling','mental']},
+  {name:'Relazioni e identità',keys:['love','relationship','family','parent','child','man ',' men','woman','women','friend','dating','marriage','spouse','identity','self ','masculinity','loneliness','lonely','friendship','sex','romance','memoir','autobiography','life story']}
+ ]}
+];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’‘]/g,"'").replace(/\s+/g,' ');
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const years=[...new Set(window.readingItems.map(x=>x.year))].sort((a,b)=>a-b);
+const leaves=[];taxonomy.forEach((t,ti)=>t.subs.forEach((s,si)=>leaves.push({...s,parent:ti,index:leaves.length})));
+function classify(title){const t=norm(title);let best=-1,bestScore=0;leaves.forEach((s,i)=>{let score=0;s.keys.forEach(k=>{const q=norm(k.trim());if(q&&t.includes(q))score+=Math.min(2,1+q.length/18)});if(score>bestScore){best=i;bestScore=score}});return best<0?leaves.length:best}
+const otherIndex=leaves.length;leaves.push({name:'Altri temi',keys:[],parent:taxonomy.length,index:otherIndex});
+const items=window.readingItems.map(item=>({...item,title:item.title,sub:classify(item.title)}));
+const topics=[...taxonomy,{name:'Altri temi',subs:[{name:'Saggi e temi trasversali',keys:[]}]}];
+let mode='share',selectedTopic=0,selectedSub=null;
+const yearsCount=Object.fromEntries(years.map(y=>[y,items.filter(x=>x.year===y).length]));
+const countsBySub=(sub,y)=>items.filter(x=>x.year===y&&x.sub===sub).length;
+const getShare=(n,y)=>yearsCount[y]?100*n/yearsCount[y]:0;
+const fmt=n=>new Intl.NumberFormat('it-IT').format(n);
+const tColors=taxonomy.map((_,i)=>palette[i%palette.length]);
+const totals={books:items.filter(x=>x.kind==='book').length,articles:items.filter(x=>x.kind==='article').length};
+document.getElementById('totals').innerHTML=`<div class="total"><b>${fmt(items.length)}</b><span>letture</span></div><div class="total"><b>${fmt(totals.books)}</b><span>libri</span></div><div class="total"><b>${fmt(totals.articles)}</b><span>articoli</span></div>`;
+years.forEach(y=>document.getElementById('year-filter').insertAdjacentHTML('beforeend',`<option value="${y}">${y}</option>`));
+function mainCounts(ti,y){return items.reduce((n,x)=>n+(x.year===y&&((ti===taxonomy.length&&x.sub===otherIndex)||(ti<taxonomy.length&&leaves[x.sub]?.parent===ti))?1:0),0)}
+function renderHeat(){
+ const rows=taxonomy.map((t,ti)=>({t,ti,total:items.filter(x=>leaves[x.sub]?.parent===ti).length}));
+ rows.push({t:{name:'Altri temi'},ti:taxonomy.length,total:items.filter(x=>x.sub===otherIndex).length});
+ rows.sort((a,b)=>b.total-a.total);
+ const max=mode==='count'?Math.max(...items.map(x=>1),...rows.flatMap(r=>years.map(y=>mainCounts(r.ti,y)))):Math.max(...rows.flatMap(r=>years.map(y=>getShare(mainCounts(r.ti,y),y))));
+ let html='<thead><tr class="volume-row"><th>Totale letture</th>'+years.map(y=>`<th><div class="vol"><i style="height:${Math.max(2,yearsCount[y]/Math.max(...Object.values(yearsCount))*34)}px"></i><span>${fmt(yearsCount[y])}</span></div>${y}</th>`).join('')+'</tr></thead><tbody>';
+ rows.forEach(({t,ti,total})=>{const color=tColors[ti]||'#8e7758';html+=`<tr class="theme-row ${selectedTopic===ti?'selected':''}" data-topic="${ti}"><td><button class="theme-button"><i class="swatch" style="background:${color}"></i><span class="theme-label">${t.name}</span><span class="theme-total">${fmt(total)}</span></button></td>`;years.forEach(y=>{const n=mainCounts(ti,y),v=mode==='count'?n:getShare(n,y),alpha=max?Math.max(n?0.12:0,Math.min(.9,.12+.78*v/max)):0;const text=mode==='count'?n:`${v.toFixed(0)}%`;const bg=n?`color-mix(in srgb, ${color} ${Math.round(alpha*100)}%, transparent)`:'transparent';html+=`<td class="cell" style="background:${bg}" title="${t.name} · ${y}: ${fmt(n)} letture (${getShare(n,y).toFixed(1)}%)">${n?text:'·'}</td>`});html+='</tr>'});
+ html+=`<tr class="year-total-row"><td>Totale</td>${years.map(y=>`<td>${fmt(yearsCount[y])}</td>`).join('')}</tr></tbody>`;
+ document.getElementById('heatmap').innerHTML=html;
+ document.querySelectorAll('.theme-row').forEach(el=>el.addEventListener('click',()=>{selectedTopic=Number(el.dataset.topic);selectedSub=null;renderHeat();renderDetail();renderItems()}));
+ const maxLabel=mode==='share'?`${Math.ceil(max)}%`:`${fmt(max)} titoli`;document.getElementById('scale').innerHTML=`<span>meno</span><i style="opacity:.18"></i><i style="opacity:.4"></i><i style="opacity:.65"></i><i style="opacity:.9"></i><span>più · scala fino a ${maxLabel}</span>`;
+}
+function renderAnnual(){
+ const familyIds=taxonomy.map((_,i)=>i).concat(taxonomy.length);
+ const nameOf=ti=>taxonomy[ti]?.name||'Altri temi';
+ const valueOf=(n,y)=>mode==='share'?getShare(n,y):n;
+ const labelOf=(v)=>mode==='share'?`${v.toFixed(1)}%`:fmt(Math.round(v));
+ const changeOf=(v)=>mode==='share'?`${v>0?'+':''}${v.toFixed(1)} pp`:`${v>0?'+':''}${fmt(Math.round(v))}`;
+ document.getElementById('yearly-caption').textContent=mode==='share'?'Temi più presenti e variazioni della loro quota rispetto all’anno precedente (punti percentuali).':'Temi più presenti e variazioni nel numero di titoli rispetto all’anno precedente.';
+ document.getElementById('annual-grid').innerHTML=years.map((yr,yi)=>{
+  const ranking=familyIds.map(ti=>({ti,n:mainCounts(ti,yr),v:valueOf(mainCounts(ti,yr),yr)})).sort((a,b)=>b.n-a.n).slice(0,3);
+  const topTopic=ranking[0]?.ti;
+  const subCandidates=leaves.map((leaf,si)=>({leaf,si,n:countsBySub(si,yr)})).filter(x=>x.n>0&&(topTopic===taxonomy.length?x.si===otherIndex:x.leaf.parent===topTopic)).sort((a,b)=>b.n-a.n);
+  const topSub=subCandidates[0];
+  let changes='';
+  if(yi===0){changes='<div class="baseline">Prima annata presente nell’archivio: manca un anno precedente per il confronto.</div>'}
+  else{
+   const prev=years[yi-1];
+   const diffs=familyIds.map(ti=>({ti,d:valueOf(mainCounts(ti,yr),yr)-valueOf(mainCounts(ti,prev),prev)}));
+   const rises=diffs.filter(x=>x.d>0).sort((a,b)=>b.d-a.d).slice(0,2);
+   const falls=diffs.filter(x=>x.d<0).sort((a,b)=>a.d-b.d).slice(0,2);
+   const changeItems=(arr,cls)=>arr.length?arr.map(x=>`<div class="change-item ${cls}">${nameOf(x.ti)} <b>${changeOf(x.d)}</b></div>`).join(''):'<div class="change-item">nessuno</div>';
+   changes=`<div class="annual-label">Variazioni vs ${prev}</div><div class="change-list"><div><p class="change-title">In aumento</p>${changeItems(rises,'change-up')}</div><div><p class="change-title">In calo</p>${changeItems(falls,'change-down')}</div></div>`;
+  }
+  const topHtml=ranking.map((x,i)=>`<li><span class="rank">${i+1}</span><span>${nameOf(x.ti)}</span><span class="value">${labelOf(x.v)}</span></li>`).join('');
+  const subHtml=topSub?`<p class="annual-sub">Sottotema più letto: <strong>${topSub.leaf.name}</strong> · ${fmt(topSub.n)} titoli</p>`:'';
+  const books=items.filter(x=>x.year===yr&&x.kind==='book').length,articles=yearsCount[yr]-books;
+  return `<article class="annual-card"><div class="annual-title"><strong>${yr}</strong><span>${fmt(yearsCount[yr])} titoli · ${fmt(books)} libri / ${fmt(articles)} articoli</span></div><p class="annual-label">Temi principali</p><ol class="annual-top">${topHtml}</ol>${subHtml}${changes}</article>`;
+ }).join('');
+}
+function seriesForTopic(){return selectedTopic===taxonomy.length?[otherIndex]:leaves.map((s,i)=>s.parent===selectedTopic?i:-1).filter(i=>i>=0)}
+function renderDetail(){
+ const name=taxonomy[selectedTopic]?.name||'Altri temi';document.getElementById('detail-title').textContent=name;
+ const subs=seriesForTopic();if(selectedSub!==null&&!subs.includes(selectedSub))selectedSub=null;
+ const counts=subs.map(si=>years.reduce((a,y)=>a+countsBySub(si,y),0));const order=subs.slice().sort((a,b)=>years.reduce((n,y)=>n+countsBySub(b,y)-countsBySub(a,y),0));
+ const active=selectedSub===null?order:order.filter(si=>si===selectedSub);
+ document.getElementById('series-legend').innerHTML=order.map(si=>{const nm=leaves[si].name, c=palette[si%palette.length];return `<button class="${selectedSub===si?'active':''}" data-sub="${si}"><i style="background:${c}"></i>${nm}</button>`}).join('');
+ document.querySelectorAll('.series-legend button').forEach(el=>el.addEventListener('click',()=>{const si=Number(el.dataset.sub);selectedSub=selectedSub===si?null:si;renderDetail();renderItems()}));
+ const svg=document.getElementById('subchart'),W=900,H=280,L=50,R=18,T=14,B=35,innerW=W-L-R,innerH=H-T-B;
+ const vals=active.flatMap(si=>years.map(y=>mode==='count'?countsBySub(si,y):getShare(countsBySub(si,y),y)));
+ let maxVal=Math.max(1,...vals);if(mode==='share')maxVal=Math.max(5,Math.ceil(maxVal/5)*5);else maxVal=Math.ceil(maxVal/5)*5||5;
+ const x=i=>L+(years.length<2?0:i*innerW/(years.length-1)),y=v=>T+innerH-v/maxVal*innerH;
+ let out='';for(let i=0;i<=4;i++){const val=maxVal*i/4,yy=y(val);out+=`<line class="axis-line" x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}"/><text class="axis-label" x="${L-10}" y="${yy+4}" text-anchor="end">${mode==='share'?val.toFixed(0)+'%':fmt(Math.round(val))}</text>`}
+ years.forEach((yr,i)=>{out+=`<text class="axis-label" x="${x(i)}" y="${H-8}" text-anchor="middle">${yr}</text>`});
+ active.forEach((si,j)=>{const vs=years.map(yr=>mode==='count'?countsBySub(si,yr):getShare(countsBySub(si,yr),yr));const d=vs.map((v,i)=>`${i?'L':'M'}${x(i)},${y(v)}`).join(' ');const color=palette[si%palette.length];out+=`<path class="series-line" d="${d}" stroke="${color}"/>`;vs.forEach((v,i)=>{out+=`<circle class="series-point" data-sub="${si}" data-year="${years[i]}" data-val="${v}" cx="${x(i)}" cy="${y(v)}" r="3.6" fill="${color}"><title>${leaves[si].name} · ${years[i]}: ${mode==='share'?v.toFixed(1)+'%':fmt(v)}</title></circle>`})});
+ svg.innerHTML=out;
+ svg.querySelectorAll('.series-point').forEach(point=>point.addEventListener('mouseenter',e=>{const tip=document.getElementById('tooltip');const b=svg.getBoundingClientRect(),c=e.target.getBoundingClientRect();tip.style.display='block';tip.style.left=`${c.left-b.left+c.width/2}px`;tip.style.top=`${c.top-b.top}px`;const val=Number(point.dataset.val);tip.textContent=`${leaves[Number(point.dataset.sub)].name} · ${point.dataset.year}: ${mode==='share'?val.toFixed(1)+'%':fmt(val)}`}));
+ svg.querySelectorAll('.series-point').forEach(point=>point.addEventListener('mouseleave',()=>document.getElementById('tooltip').style.display='none'));
+ document.getElementById('detail-description').textContent=mode==='share'?'Quota sul totale delle letture registrate in ciascun anno. Clicca una voce per isolare il sottotema.':'Numero di titoli registrati in ciascun anno. Clicca una voce per isolare il sottotema.';
+}
+function renderItems(){
+ const yr=document.getElementById('year-filter').value,kind=document.getElementById('kind-filter').value,q=norm(document.getElementById('search').value.trim());
+ const filtered=items.filter(it=>(it.sub===otherIndex?selectedTopic===taxonomy.length:leaves[it.sub].parent===selectedTopic)&&(selectedSub===null||it.sub===selectedSub)&&(yr==='all'||it.year===Number(yr))&&(kind==='all'||it.kind===kind)&&(!q||norm(it.title).includes(q)));
+ document.getElementById('item-count').textContent=`${fmt(filtered.length)} ${filtered.length===1?'lettura':'letture'}`;
+ const shown=filtered.slice(0,90);document.getElementById('items').innerHTML=shown.length?shown.map(it=>`<article class="item"><span class="item-year">${it.year}</span><div><div class="item-title">${escapeHTML(it.title)}</div><div class="item-kind">${it.kind==='book'?'libro':'articolo'} · ${leaves[it.sub].name}</div></div></article>`).join(''):'<p class="empty">Nessuna lettura con questi filtri.</p>';
+ if(filtered.length>90)document.getElementById('items').insertAdjacentHTML('beforeend','<p class="empty">Primi 90 risultati mostrati. Aggiungi un filtro per restringere l’elenco.</p>');
+}
+document.querySelectorAll('.mode button').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.mode;document.querySelectorAll('.mode button').forEach(b=>b.classList.toggle('active',b===btn));renderHeat();renderAnnual();renderDetail()}));
+['year-filter','kind-filter','search'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',renderItems));
+// Start on the largest broad theme, so the detail view is immediately useful.
+selectedTopic=taxonomy.map((_,ti)=>items.filter(it=>leaves[it.sub]?.parent===ti).length).indexOf(Math.max(...taxonomy.map((_,ti)=>items.filter(it=>leaves[it.sub]?.parent===ti).length)));
+renderHeat();renderAnnual();renderDetail();renderItems();
+</script>
+</body>
+</html>

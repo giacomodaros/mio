@@ -65,6 +65,7 @@
   <section class="reading-section" aria-labelledby="list-title">
     <div class="reading-head"><h2 id="list-title">Le letture in questo tema</h2><span id="item-count"></span></div>
     <div class="filters">
+      <select id="topic-filter" aria-label="Filtra per tema"><option value="all">Tutti i temi</option></select>
       <select id="year-filter" aria-label="Filtra per anno"><option value="all">Tutti gli anni</option></select>
       <select id="kind-filter" aria-label="Filtra per tipo"><option value="all">Libri e articoli</option><option value="book">Libri</option><option value="article">Articoli</option></select>
       <input id="search" type="search" placeholder="Cerca un titolo" aria-label="Cerca un titolo">
@@ -115,7 +116,7 @@ function classify(title){const t=norm(title);let best=-1,bestScore=0;leaves.forE
 const otherIndex=leaves.length;leaves.push({name:'Altri temi',keys:[],parent:taxonomy.length,index:otherIndex});
 const items=window.readingItems.map(item=>({...item,title:item.title,sub:classify(item.title)}));
 const topics=[...taxonomy,{name:'Altri temi',subs:[{name:'Saggi e temi trasversali',keys:[]}]}];
-let mode='share',selectedTopic=0,selectedSub=null;
+let mode='share',selectedTopic=0,selectedSub=null,listTopic=null;
 const yearsCount=Object.fromEntries(years.map(y=>[y,items.filter(x=>x.year===y).length]));
 const countsBySub=(sub,y)=>items.filter(x=>x.year===y&&x.sub===sub).length;
 const getShare=(n,y)=>yearsCount[y]?100*n/yearsCount[y]:0;
@@ -124,6 +125,8 @@ const tColors=taxonomy.map((_,i)=>palette[i%palette.length]);
 const totals={books:items.filter(x=>x.kind==='book').length,articles:items.filter(x=>x.kind==='article').length};
 document.getElementById('totals').innerHTML=`<div class="total"><b>${fmt(items.length)}</b><span>letture</span></div><div class="total"><b>${fmt(totals.books)}</b><span>libri</span></div><div class="total"><b>${fmt(totals.articles)}</b><span>articoli</span></div>`;
 years.forEach(y=>document.getElementById('year-filter').insertAdjacentHTML('beforeend',`<option value="${y}">${y}</option>`));
+taxonomy.forEach((t,ti)=>document.getElementById('topic-filter').insertAdjacentHTML('beforeend',`<option value="${ti}">${t.name}</option>`));
+document.getElementById('topic-filter').insertAdjacentHTML('beforeend',`<option value="${taxonomy.length}">Altri temi</option>`);
 function mainCounts(ti,y){return items.reduce((n,x)=>n+(x.year===y&&((ti===taxonomy.length&&x.sub===otherIndex)||(ti<taxonomy.length&&leaves[x.sub]?.parent===ti))?1:0),0)}
 function renderHeat(){
  const rows=taxonomy.map((t,ti)=>({t,ti,total:items.filter(x=>leaves[x.sub]?.parent===ti).length}));
@@ -134,7 +137,7 @@ function renderHeat(){
  rows.forEach(({t,ti,total})=>{const color=tColors[ti]||'#8e7758';html+=`<tr class="theme-row ${selectedTopic===ti?'selected':''}" data-topic="${ti}"><td><button class="theme-button"><i class="swatch" style="background:${color}"></i><span class="theme-label">${t.name}</span><span class="theme-total">${fmt(total)}</span></button></td>`;years.forEach(y=>{const n=mainCounts(ti,y),v=mode==='count'?n:getShare(n,y),alpha=max?Math.max(n?0.12:0,Math.min(.9,.12+.78*v/max)):0;const text=mode==='count'?n:`${v.toFixed(0)}%`;const bg=n?`color-mix(in srgb, ${color} ${Math.round(alpha*100)}%, transparent)`:'transparent';html+=`<td class="cell" style="background:${bg}" title="${t.name} · ${y}: ${fmt(n)} letture (${getShare(n,y).toFixed(1)}%)">${n?text:'·'}</td>`});html+='</tr>'});
  html+=`<tr class="year-total-row"><td>Totale</td>${years.map(y=>`<td>${fmt(yearsCount[y])}</td>`).join('')}</tr></tbody>`;
  document.getElementById('heatmap').innerHTML=html;
- document.querySelectorAll('.theme-row').forEach(el=>el.addEventListener('click',()=>{selectedTopic=Number(el.dataset.topic);selectedSub=null;renderHeat();renderDetail();renderItems()}));
+ document.querySelectorAll('.theme-row').forEach(el=>el.addEventListener('click',()=>{selectedTopic=Number(el.dataset.topic);listTopic=selectedTopic;selectedSub=null;document.getElementById('topic-filter').value=String(listTopic);renderHeat();renderDetail();renderItems()}));
  const maxLabel=mode==='share'?`${Math.ceil(max)}%`:`${fmt(max)} titoli`;document.getElementById('scale').innerHTML=`<span>meno</span><i style="opacity:.18"></i><i style="opacity:.4"></i><i style="opacity:.65"></i><i style="opacity:.9"></i><span>più · scala fino a ${maxLabel}</span>`;
 }
 function renderAnnual(){
@@ -172,7 +175,7 @@ function renderDetail(){
  const counts=subs.map(si=>years.reduce((a,y)=>a+countsBySub(si,y),0));const order=subs.slice().sort((a,b)=>years.reduce((n,y)=>n+countsBySub(b,y)-countsBySub(a,y),0));
  const active=selectedSub===null?order:order.filter(si=>si===selectedSub);
  document.getElementById('series-legend').innerHTML=order.map(si=>{const nm=leaves[si].name, c=palette[si%palette.length];return `<button class="${selectedSub===si?'active':''}" data-sub="${si}"><i style="background:${c}"></i>${nm}</button>`}).join('');
- document.querySelectorAll('.series-legend button').forEach(el=>el.addEventListener('click',()=>{const si=Number(el.dataset.sub);selectedSub=selectedSub===si?null:si;renderDetail();renderItems()}));
+ document.querySelectorAll('.series-legend button').forEach(el=>el.addEventListener('click',()=>{const si=Number(el.dataset.sub);selectedSub=selectedSub===si?null:si;listTopic=selectedTopic;document.getElementById('topic-filter').value=String(listTopic);renderDetail();renderItems()}));
  const svg=document.getElementById('subchart'),W=900,H=280,L=50,R=18,T=14,B=35,innerW=W-L-R,innerH=H-T-B;
  const vals=active.flatMap(si=>years.map(y=>mode==='count'?countsBySub(si,y):getShare(countsBySub(si,y),y)));
  let maxVal=Math.max(1,...vals);if(mode==='share')maxVal=Math.max(5,Math.ceil(maxVal/5)*5);else maxVal=Math.ceil(maxVal/5)*5||5;
@@ -187,13 +190,16 @@ function renderDetail(){
 }
 function renderItems(){
  const yr=document.getElementById('year-filter').value,kind=document.getElementById('kind-filter').value,q=norm(document.getElementById('search').value.trim());
- const filtered=items.filter(it=>(it.sub===otherIndex?selectedTopic===taxonomy.length:leaves[it.sub].parent===selectedTopic)&&(selectedSub===null||it.sub===selectedSub)&&(yr==='all'||it.year===Number(yr))&&(kind==='all'||it.kind===kind)&&(!q||norm(it.title).includes(q)));
+ const listTitle=document.getElementById('list-title');
+ listTitle.textContent=listTopic===null?'Tutte le letture':selectedSub!==null?`Letture · ${leaves[selectedSub].name}`:`Letture · ${taxonomy[listTopic]?.name||'Altri temi'}`;
+ const filtered=items.filter(it=>(listTopic===null||(listTopic===taxonomy.length?it.sub===otherIndex:leaves[it.sub]?.parent===listTopic))&&(selectedSub===null||it.sub===selectedSub)&&(yr==='all'||it.year===Number(yr))&&(kind==='all'||it.kind===kind)&&(!q||norm(it.title).includes(q)));
  document.getElementById('item-count').textContent=`${fmt(filtered.length)} ${filtered.length===1?'lettura':'letture'}`;
  const shown=filtered.slice(0,90);document.getElementById('items').innerHTML=shown.length?shown.map(it=>`<article class="item"><span class="item-year">${it.year}</span><div><div class="item-title">${escapeHTML(it.title)}</div><div class="item-kind">${it.kind==='book'?'libro':'articolo'} · ${leaves[it.sub].name}</div></div></article>`).join(''):'<p class="empty">Nessuna lettura con questi filtri.</p>';
  if(filtered.length>90)document.getElementById('items').insertAdjacentHTML('beforeend','<p class="empty">Primi 90 risultati mostrati. Aggiungi un filtro per restringere l’elenco.</p>');
 }
 document.querySelectorAll('.mode button').forEach(btn=>btn.addEventListener('click',()=>{mode=btn.dataset.mode;document.querySelectorAll('.mode button').forEach(b=>b.classList.toggle('active',b===btn));renderHeat();renderAnnual();renderDetail()}));
 ['year-filter','kind-filter','search'].forEach(id=>document.getElementById(id).addEventListener(id==='search'?'input':'change',renderItems));
+document.getElementById('topic-filter').addEventListener('change',()=>{const v=document.getElementById('topic-filter').value;listTopic=v==='all'?null:Number(v);selectedSub=null;if(listTopic!==null)selectedTopic=listTopic;renderHeat();renderDetail();renderItems()});
 // Start on the largest broad theme, so the detail view is immediately useful.
 selectedTopic=taxonomy.map((_,ti)=>items.filter(it=>leaves[it.sub]?.parent===ti).length).indexOf(Math.max(...taxonomy.map((_,ti)=>items.filter(it=>leaves[it.sub]?.parent===ti).length)));
 renderHeat();renderAnnual();renderDetail();renderItems();

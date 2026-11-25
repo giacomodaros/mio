@@ -45,18 +45,24 @@ body {
 }
 
 /* Links */
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 a:link, a:visited {
   color: var(--link-light);
   text-decoration: none;
 }
 
-a:hover {
-  color: var(--hover-light);
-  text-decoration: none; /* Suggestion for visual feedback */
-}
+@media (hover: hover) {
+  a:hover {
+    color: var(--hover-light);
+    text-decoration: none;
+  }
 
-a:active {
-  color: var(--active-light);
+  a:active {
+    color: var(--active-light);
+  }
 }
 
 /* Dark Mode Link Styles */
@@ -65,12 +71,14 @@ a:active {
     color: var(--link-dark);
   }
 
-  a:hover {
-    color: var(--hover-dark);
-  }
+  @media (hover: hover) {
+    a:hover {
+      color: var(--hover-dark);
+    }
 
-  a:active {
-    color: var(--active-dark);
+    a:active {
+      color: var(--active-dark);
+    }
   }
 }
 

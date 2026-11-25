@@ -18,6 +18,20 @@
   navigation: auto;
 }
 
+body > h1 {
+  view-transition-name: page-heading;
+}
+
+/* Keep the heading in place and show the new page's text immediately. */
+::view-transition-group(page-heading),
+::view-transition-new(page-heading) {
+  animation: none;
+}
+
+::view-transition-old(page-heading) {
+  display: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root) {
     animation: page-exit 180ms ease-in both;

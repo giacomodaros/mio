@@ -14,8 +14,10 @@ window.addEventListener('load', () => {
       } catch {
         return;
       }
-      if (url.origin !== location.origin || !url.pathname.endsWith('.html') ||
-          url.pathname.endsWith('/robe-viste.html') || url.search) return;
+      const lastSegment = url.pathname.split('/').filter(Boolean).pop() || '';
+      const isPage = !lastSegment.includes('.') || lastSegment.endsWith('.html');
+      if (url.origin !== location.origin || !isPage ||
+          lastSegment === 'robe-viste' || lastSegment === 'robe-viste.html' || url.search) return;
       url.hash = '';
       if (!seen.has(url.href)) {
         seen.add(url.href);

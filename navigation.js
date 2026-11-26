@@ -80,7 +80,9 @@
     const link = event.target.closest('a[href]');
     if (!link || link.hasAttribute('download') || (link.target && link.target !== '_self')) return;
     const url = new URL(link.href, location.href);
-    if (url.origin !== location.origin || !url.pathname.endsWith('.html') || url.search ||
+    const lastSegment = url.pathname.split('/').pop();
+    const isPage = !lastSegment.includes('.') || lastSegment.endsWith('.html');
+    if (url.origin !== location.origin || !isPage || url.search ||
         (url.pathname === location.pathname && url.hash)) return;
     event.preventDefault();
     navigate(url);

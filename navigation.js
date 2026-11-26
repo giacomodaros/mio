@@ -5,6 +5,7 @@
   let swappedPage = false;
   let scrollTimer;
   let restoring = false;
+  let headingReservation;
   const initialState = { ...(history.state || {}), ortoScroll: [scrollX, scrollY] };
   history.replaceState(initialState, '', location.href);
   history.scrollRestoration = 'manual';
@@ -18,6 +19,33 @@
 
   function saveScroll() {
     history.replaceState({ ...(history.state || {}), ortoScroll: [scrollX, scrollY] }, '', location.href);
+  }
+
+  function clearHeadingReservation() {
+    if (!headingReservation) return;
+    headingReservation.element.style.minHeight = headingReservation.minHeight;
+    headingReservation = null;
+  }
+
+  function reserveHeadingSpace(nextHeading) {
+    const heading = document.querySelector('body > h1');
+    if (!heading) return;
+
+    // Measure the next title at the current page width without showing it.
+    const measure = nextHeading.cloneNode(true);
+    Object.assign(measure.style, {
+      position: 'absolute', visibility: 'hidden', pointerEvents: 'none',
+      left: '0', top: '0', margin: '0', boxSizing: 'border-box',
+      width: `${heading.getBoundingClientRect().width}px`
+    });
+    document.body.appendChild(measure);
+    const nextHeight = measure.getBoundingClientRect().height;
+    measure.remove();
+
+    if (nextHeight > heading.getBoundingClientRect().height) {
+      headingReservation = { element: heading, minHeight: heading.style.minHeight };
+      heading.style.minHeight = `${nextHeight}px`;
+    }
   }
 
   window.addEventListener('scroll', () => {
@@ -51,6 +79,7 @@
 
   async function navigate(url, isHistoryNavigation = false, scroll = [0, 0]) {
     const id = ++navigation;
+    clearHeadingReservation();
     try {
       const response = await fetch(url.href, { credentials: 'same-origin' });
       if (!response.ok || !response.headers.get('content-type')?.includes('text/html') ||
@@ -74,6 +103,7 @@
         scrollTimer = null;
         saveScroll();
         restoring = true;
+        reserveHeadingSpace(page.querySelector('body > h1'));
         await scrollToTop(id);
         if (id !== navigation) return;
       }
@@ -84,6 +114,7 @@
         }
         document.title = page.title;
         document.body.replaceChildren(...page.body.childNodes);
+        headingReservation = null;
         swappedPage = true;
         if (url.hash) {
           const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
@@ -98,6 +129,7 @@
       update();
     } catch {
       if (id !== navigation) return;
+      clearHeadingReservation();
       if (isHistoryNavigation) location.reload();
       else location.href = url.href;
     }

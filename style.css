@@ -33,6 +33,11 @@ body > h1 {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Animate the live content so it covers the full screen on mobile Safari. */
+  .page-content-enter {
+    animation: page-enter 220ms ease-out both;
+  }
+
   ::view-transition-old(root) {
     animation: page-exit 180ms ease-in both;
   }

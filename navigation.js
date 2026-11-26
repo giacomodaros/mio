@@ -5,8 +5,6 @@
   let swappedPage = false;
   let scrollTimer;
   let restoring = false;
-  let headingReservation;
-  let outgoingContent;
   const initialState = { ...(history.state || {}), ortoScroll: [scrollX, scrollY] };
   history.replaceState(initialState, '', location.href);
   history.scrollRestoration = 'manual';
@@ -22,32 +20,6 @@
     history.replaceState({ ...(history.state || {}), ortoScroll: [scrollX, scrollY] }, '', location.href);
   }
 
-  function clearHeadingReservation() {
-    if (!headingReservation) return;
-    if (headingReservation.placeholder.isConnected) {
-      headingReservation.placeholder.replaceWith(headingReservation.original);
-    }
-    headingReservation = null;
-  }
-
-  function clearOutgoingContent() {
-    if (!outgoingContent) return;
-    outgoingContent.element.style.opacity = outgoingContent.opacity;
-    outgoingContent = null;
-  }
-
-  function reserveHeadingSpace(nextHeading) {
-    const heading = document.querySelector('body > h1');
-    if (!heading) return;
-
-    // Keep the destination title in the actual layout, but reveal it only after scrolling.
-    const placeholder = nextHeading.cloneNode(true);
-    placeholder.style.visibility = 'hidden';
-    placeholder.setAttribute('aria-hidden', 'true');
-    heading.replaceWith(placeholder);
-    headingReservation = { original: heading, placeholder };
-  }
-
   window.addEventListener('scroll', () => {
     if (restoring || scrollTimer) return;
     scrollTimer = setTimeout(() => {
@@ -56,35 +28,8 @@
     }, 400);
   }, { passive: true });
 
-  function scrollToTop(id) {
-    const startY = window.scrollY;
-    if (startY < 20 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return Promise.resolve();
-    }
-
-    const main = document.querySelector('body > main');
-    if (main) outgoingContent = { element: main, opacity: main.style.opacity };
-
-    return new Promise((resolve) => {
-      let started;
-      function step(time) {
-        if (id !== navigation) return resolve();
-        if (started === undefined) started = time;
-        const progress = Math.min((time - started) / 320, 1);
-        const ease = 1 - Math.pow(1 - progress, 3);
-        if (main) main.style.opacity = String(Math.max(0, 1 - Math.max(0, progress - 0.55) / 0.45));
-        window.scrollTo(0, startY * (1 - ease));
-        if (progress < 1) requestAnimationFrame(step);
-        else resolve();
-      }
-      requestAnimationFrame(step);
-    });
-  }
-
   async function navigate(url, isHistoryNavigation = false, scroll = [0, 0]) {
     const id = ++navigation;
-    clearHeadingReservation();
-    clearOutgoingContent();
     try {
       const response = await fetch(url.href, { credentials: 'same-origin' });
       if (!response.ok || !response.headers.get('content-type')?.includes('text/html') ||
@@ -102,26 +47,14 @@
         }
       });
       page.body.querySelectorAll('script').forEach((script) => script.remove());
-      page.querySelector('body > h1').classList.add('page-heading-enter');
-
-      if (!isHistoryNavigation) {
-        clearTimeout(scrollTimer);
-        scrollTimer = null;
-        saveScroll();
-        restoring = true;
-        reserveHeadingSpace(page.querySelector('body > h1'));
-        await scrollToTop(id);
-        if (id !== navigation) return;
-      }
 
       const update = () => {
         if (!isHistoryNavigation) {
+          saveScroll();
           history.pushState({ ortoScroll: [0, 0] }, '', url.href);
         }
         document.title = page.title;
         document.body.replaceChildren(...page.body.childNodes);
-        headingReservation = null;
-        outgoingContent = null;
         swappedPage = true;
         if (url.hash) {
           const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
@@ -136,8 +69,6 @@
       update();
     } catch {
       if (id !== navigation) return;
-      clearHeadingReservation();
-      clearOutgoingContent();
       if (isHistoryNavigation) location.reload();
       else location.href = url.href;
     }

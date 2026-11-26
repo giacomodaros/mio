@@ -47,7 +47,6 @@
         }
       });
       page.body.querySelectorAll('script').forEach((script) => script.remove());
-      page.querySelector('body > main').classList.add('page-content-enter');
 
       const update = () => {
         if (!isHistoryNavigation) {

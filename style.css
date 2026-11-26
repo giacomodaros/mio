@@ -13,49 +13,11 @@
   --active-dark: grey;
 }
 
-/* Animate same-origin page navigation in browsers that support view transitions. */
-@view-transition {
-  navigation: auto;
-}
-
-body > h1 {
-  view-transition-name: page-heading;
-}
-
-/* Keep the heading in place and show the new page's text immediately. */
-::view-transition-group(page-heading),
-::view-transition-new(page-heading) {
-  animation: none;
-}
-
-::view-transition-old(page-heading) {
-  display: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  /* Animate the live content so it covers the full screen on mobile Safari. */
-  .page-content-enter {
+  /* Animate the live content, including on a full page load. */
+  body > main {
     animation: page-enter 220ms ease-out both;
   }
-
-  ::view-transition-old(root) {
-    animation: page-exit 180ms ease-in both;
-  }
-
-  ::view-transition-new(root) {
-    animation: page-enter 220ms ease-out both;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
-  }
-}
-
-@keyframes page-exit {
-  to { opacity: 0; }
 }
 
 @keyframes page-enter {

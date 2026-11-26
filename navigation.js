@@ -28,6 +28,27 @@
     }, 400);
   }, { passive: true });
 
+  function scrollToTop(id) {
+    const startY = window.scrollY;
+    if (startY < 20 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+      let started;
+      function step(time) {
+        if (id !== navigation) return resolve();
+        if (started === undefined) started = time;
+        const progress = Math.min((time - started) / 320, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        window.scrollTo(0, startY * (1 - ease));
+        if (progress < 1) requestAnimationFrame(step);
+        else resolve();
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
   async function navigate(url, isHistoryNavigation = false, scroll = [0, 0]) {
     const id = ++navigation;
     try {
@@ -48,9 +69,17 @@
       });
       page.body.querySelectorAll('script').forEach((script) => script.remove());
 
+      if (!isHistoryNavigation) {
+        clearTimeout(scrollTimer);
+        scrollTimer = null;
+        saveScroll();
+        restoring = true;
+        await scrollToTop(id);
+        if (id !== navigation) return;
+      }
+
       const update = () => {
         if (!isHistoryNavigation) {
-          saveScroll();
           history.pushState({ ortoScroll: [0, 0] }, '', url.href);
         }
         document.title = page.title;

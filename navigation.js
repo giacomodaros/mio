@@ -23,7 +23,9 @@
 
   function clearHeadingReservation() {
     if (!headingReservation) return;
-    headingReservation.element.style.minHeight = headingReservation.minHeight;
+    if (headingReservation.placeholder.isConnected) {
+      headingReservation.placeholder.replaceWith(headingReservation.original);
+    }
     headingReservation = null;
   }
 
@@ -31,21 +33,12 @@
     const heading = document.querySelector('body > h1');
     if (!heading) return;
 
-    // Measure the next title at the current page width without showing it.
-    const measure = nextHeading.cloneNode(true);
-    Object.assign(measure.style, {
-      position: 'absolute', visibility: 'hidden', pointerEvents: 'none',
-      left: '0', top: '0', margin: '0', boxSizing: 'border-box',
-      width: `${heading.getBoundingClientRect().width}px`
-    });
-    document.body.appendChild(measure);
-    const nextHeight = measure.getBoundingClientRect().height;
-    measure.remove();
-
-    if (nextHeight > heading.getBoundingClientRect().height) {
-      headingReservation = { element: heading, minHeight: heading.style.minHeight };
-      heading.style.minHeight = `${nextHeight}px`;
-    }
+    // Keep the destination title in the actual layout, but reveal it only after scrolling.
+    const placeholder = nextHeading.cloneNode(true);
+    placeholder.style.visibility = 'hidden';
+    placeholder.setAttribute('aria-hidden', 'true');
+    heading.replaceWith(placeholder);
+    headingReservation = { original: heading, placeholder };
   }
 
   window.addEventListener('scroll', () => {

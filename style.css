@@ -15,13 +15,14 @@
 
 @media (prefers-reduced-motion: no-preference) {
   /* Animate the live content, including on a full page load. */
-  body > main {
+  body > main,
+  body > h1.page-heading-enter {
     animation: page-enter 220ms ease-out both;
   }
 }
 
 @keyframes page-enter {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; }
 }
 
 /* Simplified structural styles */

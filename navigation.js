@@ -6,6 +6,7 @@
   let scrollTimer;
   let restoring = false;
   let headingReservation;
+  let outgoingContent;
   const initialState = { ...(history.state || {}), ortoScroll: [scrollX, scrollY] };
   history.replaceState(initialState, '', location.href);
   history.scrollRestoration = 'manual';
@@ -27,6 +28,12 @@
       headingReservation.placeholder.replaceWith(headingReservation.original);
     }
     headingReservation = null;
+  }
+
+  function clearOutgoingContent() {
+    if (!outgoingContent) return;
+    outgoingContent.element.style.opacity = outgoingContent.opacity;
+    outgoingContent = null;
   }
 
   function reserveHeadingSpace(nextHeading) {
@@ -55,6 +62,9 @@
       return Promise.resolve();
     }
 
+    const main = document.querySelector('body > main');
+    if (main) outgoingContent = { element: main, opacity: main.style.opacity };
+
     return new Promise((resolve) => {
       let started;
       function step(time) {
@@ -62,6 +72,7 @@
         if (started === undefined) started = time;
         const progress = Math.min((time - started) / 320, 1);
         const ease = 1 - Math.pow(1 - progress, 3);
+        if (main) main.style.opacity = String(Math.max(0, 1 - Math.max(0, progress - 0.55) / 0.45));
         window.scrollTo(0, startY * (1 - ease));
         if (progress < 1) requestAnimationFrame(step);
         else resolve();
@@ -73,6 +84,7 @@
   async function navigate(url, isHistoryNavigation = false, scroll = [0, 0]) {
     const id = ++navigation;
     clearHeadingReservation();
+    clearOutgoingContent();
     try {
       const response = await fetch(url.href, { credentials: 'same-origin' });
       if (!response.ok || !response.headers.get('content-type')?.includes('text/html') ||
@@ -90,6 +102,7 @@
         }
       });
       page.body.querySelectorAll('script').forEach((script) => script.remove());
+      page.querySelector('body > h1').classList.add('page-heading-enter');
 
       if (!isHistoryNavigation) {
         clearTimeout(scrollTimer);
@@ -108,6 +121,7 @@
         document.title = page.title;
         document.body.replaceChildren(...page.body.childNodes);
         headingReservation = null;
+        outgoingContent = null;
         swappedPage = true;
         if (url.hash) {
           const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
@@ -123,6 +137,7 @@
     } catch {
       if (id !== navigation) return;
       clearHeadingReservation();
+      clearOutgoingContent();
       if (isHistoryNavigation) location.reload();
       else location.href = url.href;
     }
